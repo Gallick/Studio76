@@ -20,7 +20,9 @@ namespace Studio76.Forms
         private List<Booking> allBookings = new List<Booking>();
 
         //Connections
-        private string connectionString = @"Data Source=DESKTOP-TAB21TK\SQLEXPRESS;Initial Catalog=Studio76;Integrated Security=True";
+        //private string connectionString = @"Data Source=DESKTOP-TAB21TK\SQLEXPRESS;Initial Catalog=Studio76;Integrated Security=True";
+        //Tech
+        private string connectionString = @"Data Source=B602-012;Initial Catalog=Studio76;Integrated Security=True";
 
         //SQL
         private SqlDataAdapter daBookings, daBookingDetails, daArtistType, daArtists;
@@ -40,6 +42,13 @@ namespace Studio76.Forms
 
         //Cell Selection
         private List<DataGridViewCell> selectedTimeSlots = new List<DataGridViewCell>();
+
+        private int lastArtistIndex = -1;
+
+        private void frmBookings_Load(object sender, EventArgs e)
+        {
+
+        }
 
         public frmBookings()
         {
@@ -284,7 +293,7 @@ namespace Studio76.Forms
                 b.CustomerID = Int32.Parse(dr["CustomerID"].ToString());
                 b.DateBooked = dr["DateBooked"].ToString().Split(' ')[0];
 
-                b.bookingDetails = GetBookingDetails(Int32.Parse(dr["BookingDetailsID"].ToString()));
+                b.bookingDetails = GetBookingDetails(Int32.Parse(dr["BookingID"].ToString()));
                 allBookings.Add(b);
             }
 
@@ -303,18 +312,10 @@ namespace Studio76.Forms
             foreach (DataRow dr in dsStudio.Tables["BookingDetails"].Rows)
             {
                 bd.BookingID = Int32.Parse(dr["BookingID"].ToString());
-                bd.Time = TimeSpan.Parse(dr["BookingTime"].ToString());
-                bd.BookingLength = Int32.Parse(dr["BookingLength"].ToString());
+                bd.Time = TimeSpan.Parse(dr["SessionTime"].ToString());
+                bd.BookingLength = Int32.Parse(dr["SessionLength"].ToString());
+                bd.BookingDate = dr["SessionDate"].ToString().Split(' ')[0];
 
-
-                if(dr["DepositPaid"].ToString() == "True")
-                {
-                    bd.DepositPaid = true;
-                }
-                else
-                {
-                    bd.DepositPaid = false;
-                }
             }
 
             return bd;
@@ -327,7 +328,7 @@ namespace Studio76.Forms
             {
                 foreach (DataGridViewColumn column in dgAddBookingSelectDate.Columns)
                 {
-                    if(column.HeaderText.Contains(item.DateBooked))
+                    if(column.HeaderText.Contains(item.bookingDetails.BookingDate) && item.ArtistID == lastArtistIndex)
                     {
                         int id = dgAddBookingSelectDate.Columns.IndexOf(column);
                         for (int i = 0; i < 17; i++)
@@ -374,8 +375,34 @@ namespace Studio76.Forms
         {
             if (cboAddBookingArtist.SelectedIndex >= 0 && cboAddBookingArtist.SelectedValue.GetType() != typeof(DataRowView))
             {
-                SetupBookingTable();
-                GetBookingsFromArtist(Int32.Parse(cboAddBookingArtist.SelectedValue.ToString()));
+                if (lastArtistIndex != Int32.Parse(cboAddBookingArtist.SelectedValue.ToString()))
+                {
+                    //ClearPreviousBookings();
+
+                    lastArtistIndex = Int32.Parse(cboAddBookingArtist.SelectedValue.ToString());
+                    allBookings.Clear();
+
+                    GetBookingsFromArtist(Int32.Parse(cboAddBookingArtist.SelectedValue.ToString()));
+                    SetupBookingTable();
+
+                }
+            }
+        }
+
+        private void ClearPreviousBookings()
+        {
+            foreach (DataGridViewColumn column in dgAddBookingSelectDate.Columns)
+            {
+                int id = dgAddBookingSelectDate.Columns.IndexOf(column);
+                for (int i = 0; i < 17; i++)
+                {
+                    DataGridViewCell cell = dgAddBookingSelectDate[id, i];
+  
+                    if(cell.Style.BackColor == Color.Green)
+                    {
+                        cell.Value = "TEST";
+                    }
+                }
             }
         }
 

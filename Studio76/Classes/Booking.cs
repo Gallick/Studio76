@@ -39,14 +39,17 @@ namespace Studio76.Classes
         public int BookingLength { get; set; }
         public bool DepositPaid { get; set; }
 
+        public string BookingDate { get; set; }
+
         public BookingDetails() { }
 
-        public BookingDetails(int _id, TimeSpan _time, int _legnth, bool _paid)
+        public BookingDetails(int _id, TimeSpan _time, int _legnth, bool _paid, string _bookingDate)
         {
             BookingID = _id;
             Time = _time;
             BookingLength = _legnth;
             DepositPaid = _paid;
+            BookingDate = _bookingDate;
         }
     }
         
