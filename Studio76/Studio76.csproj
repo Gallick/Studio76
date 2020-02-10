@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Booking.cs" />
+    <Compile Include="Classes\SelectionBooking.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

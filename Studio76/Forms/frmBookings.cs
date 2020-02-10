@@ -63,13 +63,24 @@ namespace Studio76.Forms
         {
             if(selectedTimeSlots.Count > 0)
             {
+                SelectionBooking s = new SelectionBooking(DateTime.Now.ToShortDateString(), TimeSpan.Parse(selectedTimeSlots[0].Value.ToString()), selectedTimeSlots.Count, GetDateFromBookings(selectedTimeSlots[0]), new Artist(Int32.Parse(cboAddBookingArtist.SelectedValue.ToString())));
+
                 masterForm.ClearCurrentForm();
-                masterForm.ChangeFormToBookingConfirmation();
+                masterForm.ChangeFormToBookingConfirmation(s);
+
             }
             else
             {
                 MessageBox.Show("You must select more than 1 slot for the booking", "No Slots Selected", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private string GetDateFromBookings(DataGridViewCell _cell)
+        {
+            int colIndex = _cell.ColumnIndex;
+            string columnHeader = dgAddBookingSelectDate.Columns[colIndex].HeaderText;
+
+            return columnHeader;
         }
 
         //Fill the time slots in the cells of the time selector
@@ -111,26 +122,44 @@ namespace Studio76.Forms
                     if (e.Button == MouseButtons.Right)
                     {
                         if (selectedTimeSlots.Contains(dgAddBookingSelectDate.CurrentCell) == true)
-                        {                                                  
+                        {                 
                             dgAddBookingSelectDate.CurrentCell.Style.BackColor = defaultCellBackColour;
                             dgAddBookingSelectDate.CurrentCell.Style.ForeColor = defaultCellForColour;
                             dgAddBookingSelectDate.CurrentCell.Selected = false;
 
-                            selectedTimeSlots.Remove(dgAddBookingSelectDate.CurrentCell);                         
+                            selectedTimeSlots.Remove(dgAddBookingSelectDate.CurrentCell);
+                          
                         }
                     }
                     else if(e.Button == MouseButtons.Left)
                     {
                         if (selectedTimeSlots.Contains(dgAddBookingSelectDate.CurrentCell) == false)
                         {
-                            Color selectedColorBack = System.Drawing.ColorTranslator.FromHtml("#487eb0");
-                            Color selectedColorFor = System.Drawing.ColorTranslator.FromHtml("#f5f6fa");
+                            bool canSelect = true;
 
-                            dgAddBookingSelectDate.CurrentCell.Style.BackColor = selectedColorBack;
-                            dgAddBookingSelectDate.CurrentCell.Style.ForeColor = selectedColorFor;
-                            dgAddBookingSelectDate.CurrentCell.Selected = false;
+                            foreach (DataGridViewCell item in selectedTimeSlots)
+                            {
+                                if (dgAddBookingSelectDate.CurrentCell.ColumnIndex != item.ColumnIndex)
+                                {
+                                    canSelect = false;
+                                }
+                            }
 
-                            selectedTimeSlots.Add(dgAddBookingSelectDate.CurrentCell);
+                            if (canSelect)
+                            {
+                                Color selectedColorBack = System.Drawing.ColorTranslator.FromHtml("#487eb0");
+                                Color selectedColorFor = System.Drawing.ColorTranslator.FromHtml("#f5f6fa");
+
+                                dgAddBookingSelectDate.CurrentCell.Style.BackColor = selectedColorBack;
+                                dgAddBookingSelectDate.CurrentCell.Style.ForeColor = selectedColorFor;
+                                dgAddBookingSelectDate.CurrentCell.Selected = false;
+
+                                selectedTimeSlots.Add(dgAddBookingSelectDate.CurrentCell);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Bookings must be made on the same day!", "Cannot Select Time Slot", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
                         }
                     }
                 }

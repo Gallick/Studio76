@@ -1,4 +1,5 @@
-﻿using Studio76.Forms;
+﻿using Studio76.Classes;
+using Studio76.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -37,15 +38,17 @@ namespace Studio76
             pnlMain.Controls.Clear();
         }
 
-        public void ChangeFormToBookingConfirmation()
+        public void ChangeFormToBookingConfirmation(SelectionBooking _booking)
         {
             frmBookingConfirmation booking = new frmBookingConfirmation();
             booking.TopLevel = false;
             pnlMain.Controls.Add(booking);
             booking.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             booking.Dock = DockStyle.Fill;
-
+            booking.currentBooking = _booking;
             booking.Show();
+
+            booking.SetupInformation();
         }
     }
 }
