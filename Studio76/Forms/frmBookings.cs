@@ -43,8 +43,6 @@ namespace Studio76.Forms
         //Cell Selection
         private List<DataGridViewCell> selectedTimeSlots = new List<DataGridViewCell>();
 
-        private int lastArtistIndex = -1;
-
         private void frmBookings_Load(object sender, EventArgs e)
         {
 
@@ -56,6 +54,18 @@ namespace Studio76.Forms
 
             SetupDateSelectionContent();
             UpdateArtistSelection();
+        }
+
+        private void btnConfirmDates_Click(object sender, EventArgs e)
+        {
+            if(selectedTimeSlots.Count > 0)
+            {
+
+            }
+            else
+            {
+                MessageBox.Show("You must select more than 1 slot for the booking", "No Slots Selected", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         //Fill the time slots in the cells of the time selector
@@ -119,6 +129,10 @@ namespace Studio76.Forms
                             selectedTimeSlots.Add(dgAddBookingSelectDate.CurrentCell);
                         }
                     }
+                }
+                else
+                {
+                    MessageBox.Show("The Artist already has a booking for this time slot, please choose another!", "Cannot Select Time Slot", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -225,6 +239,19 @@ namespace Studio76.Forms
                         current = current.AddMinutes(30);
                     }
                 }
+                else
+                {
+                    for (int x = 0; x < 17; x++)
+                    {
+                        DataGridViewCell cell = dgAddBookingSelectDate[i, x];
+
+                        if(string.IsNullOrWhiteSpace(cell.Value.ToString()))
+                        {
+                            cell.Value = current.TimeOfDay.ToString();
+                            current = current.AddMinutes(30);
+                        }
+                    }
+                }
             }
         }
 
@@ -296,8 +323,8 @@ namespace Studio76.Forms
                 b.bookingDetails = GetBookingDetails(Int32.Parse(dr["BookingID"].ToString()));
                 allBookings.Add(b);
             }
-
             UpdateDisplayForBookings();
+
         }
 
         private BookingDetails GetBookingDetails(int _bookingID)
@@ -324,11 +351,13 @@ namespace Studio76.Forms
 
         private void UpdateDisplayForBookings()
         {
+            SetupBookingTable();
+
             foreach (Booking item in allBookings)
             {
                 foreach (DataGridViewColumn column in dgAddBookingSelectDate.Columns)
                 {
-                    if(column.HeaderText.Contains(item.bookingDetails.BookingDate) && item.ArtistID == lastArtistIndex)
+                    if(column.HeaderText.Contains(item.bookingDetails.BookingDate))
                     {
                         int id = dgAddBookingSelectDate.Columns.IndexOf(column);
                         for (int i = 0; i < 17; i++)
@@ -375,22 +404,27 @@ namespace Studio76.Forms
         {
             if (cboAddBookingArtist.SelectedIndex >= 0 && cboAddBookingArtist.SelectedValue.GetType() != typeof(DataRowView))
             {
-                if (lastArtistIndex != Int32.Parse(cboAddBookingArtist.SelectedValue.ToString()))
-                {
-                    //ClearPreviousBookings();
+                allBookings.Clear();
 
-                    lastArtistIndex = Int32.Parse(cboAddBookingArtist.SelectedValue.ToString());
-                    allBookings.Clear();
+                ClearPreviousBookings();
 
-                    GetBookingsFromArtist(Int32.Parse(cboAddBookingArtist.SelectedValue.ToString()));
-                    SetupBookingTable();
+                GetBookingsFromArtist(Int32.Parse(cboAddBookingArtist.SelectedValue.ToString()));
 
-                }
-            }
+                //Next then Previous to reset the form visuals
+                PbDatesNext_Click(null, null);
+                PbDatesPervious_Click(null, null);
+
+            }          
         }
 
         private void ClearPreviousBookings()
         {
+            if (dsStudio.Tables["Bookings"] != null && dsStudio.Tables["BookingDetails"] != null)
+            {
+                dsStudio.Tables["Bookings"].Clear();
+                dsStudio.Tables["BookingDetails"].Clear();
+            }
+
             foreach (DataGridViewColumn column in dgAddBookingSelectDate.Columns)
             {
                 int id = dgAddBookingSelectDate.Columns.IndexOf(column);
@@ -400,10 +434,14 @@ namespace Studio76.Forms
   
                     if(cell.Style.BackColor == Color.Green)
                     {
-                        cell.Value = "TEST";
+                        cell.Style.BackColor = DefaultBackColor;
+                        cell.Style.ForeColor = DefaultForeColor;
+
                     }
                 }
             }
+
+            SetupBookingTable();
         }
 
         private void CboAddBookingArtistType_SelectedIndexChanged(object sender, EventArgs e)
