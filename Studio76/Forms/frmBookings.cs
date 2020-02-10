@@ -16,6 +16,9 @@ namespace Studio76.Forms
 {
     public partial class frmBookings : Form
     {
+        //Master Form
+        public frmMain masterForm;
+
         //Bookings
         private List<Booking> allBookings = new List<Booking>();
 
@@ -60,7 +63,8 @@ namespace Studio76.Forms
         {
             if(selectedTimeSlots.Count > 0)
             {
-
+                masterForm.ClearCurrentForm();
+                masterForm.ChangeFormToBookingConfirmation();
             }
             else
             {

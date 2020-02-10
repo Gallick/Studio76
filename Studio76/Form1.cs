@@ -26,6 +26,25 @@ namespace Studio76
             pnlMain.Controls.Add(booking);
             booking.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             booking.Dock = DockStyle.Fill;
+
+            booking.masterForm = this;
+
+            booking.Show();
+        }
+        
+        public void ClearCurrentForm()
+        {
+            pnlMain.Controls.Clear();
+        }
+
+        public void ChangeFormToBookingConfirmation()
+        {
+            frmBookingConfirmation booking = new frmBookingConfirmation();
+            booking.TopLevel = false;
+            pnlMain.Controls.Add(booking);
+            booking.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            booking.Dock = DockStyle.Fill;
+
             booking.Show();
         }
     }
