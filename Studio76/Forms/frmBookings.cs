@@ -63,7 +63,12 @@ namespace Studio76.Forms
         {
             if(selectedTimeSlots.Count > 0)
             {
-                SelectionBooking s = new SelectionBooking(DateTime.Now.ToShortDateString(), TimeSpan.Parse(selectedTimeSlots[0].Value.ToString()), selectedTimeSlots.Count, GetDateFromBookings(selectedTimeSlots[0]), new Artist(Int32.Parse(cboAddBookingArtist.SelectedValue.ToString())));
+                int artistID = Int32.Parse(cboAddBookingArtist.SelectedValue.ToString());
+
+                SelectionBooking s = new SelectionBooking(DateTime.Now.ToShortDateString(), 
+                    TimeSpan.Parse(selectedTimeSlots[0].Value.ToString()), selectedTimeSlots.Count,
+                    GetDateFromBookings(selectedTimeSlots[0]), 
+                    new Artist(artistID, GetArtistName(artistID), GetArtistHourlyPrice(artistID)));
 
                 masterForm.ClearCurrentForm();
                 masterForm.ChangeFormToBookingConfirmation(s);
@@ -358,6 +363,46 @@ namespace Studio76.Forms
             }
             UpdateDisplayForBookings();
 
+        }
+
+        private float GetArtistHourlyPrice(int _artistID)
+        {
+            float price = 0.0f;
+
+            sqlBookings = @"SELECT * FROM Artist WHERE ArtistID = '" + _artistID + "'";
+
+            daBookings = new SqlDataAdapter(sqlBookings, connectionString);
+            daBookings.FillSchema(dsStudio, SchemaType.Source, "Artists");
+
+            daBookings.Fill(dsStudio, "Artists");
+
+            foreach (DataRow dr in dsStudio.Tables["Artists"].Rows)
+            {
+                price = float.Parse(dr["ArtistHourlyPrice"].ToString());                                                                                                                                                                                                     
+            }
+
+            return price;
+        }
+
+        private string GetArtistName(int _artistID)
+        {
+            string forename = "";
+            string surname = "";
+
+            sqlBookings = @"SELECT * FROM Artist WHERE ArtistID = '" + _artistID + "'";
+
+            daBookings = new SqlDataAdapter(sqlBookings, connectionString);
+            daBookings.FillSchema(dsStudio, SchemaType.Source, "Artists");
+
+            daBookings.Fill(dsStudio, "Artists");
+
+            foreach (DataRow dr in dsStudio.Tables["Artists"].Rows)
+            {
+                forename = dr["ArtistForename"].ToString();
+                surname = dr["ArtistSurname"].ToString();
+            }
+
+            return forename + " " + surname;
         }
 
         private BookingDetails GetBookingDetails(int _bookingID)

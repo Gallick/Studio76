@@ -60,8 +60,13 @@
             this.lblBookingDates = new System.Windows.Forms.Label();
             this.lblBookingLength = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.lblTotalCost = new System.Windows.Forms.Label();
+            this.lblTotalCostResult = new System.Windows.Forms.Label();
             this.lblArtistName = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.lblPricePerHour = new System.Windows.Forms.Label();
+            this.btnConfirmBooking = new System.Windows.Forms.Button();
+            this.label20 = new System.Windows.Forms.Label();
+            this.cbDepositPaid = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // lblBookingsHeader
@@ -81,7 +86,7 @@
             this.txtCustomerSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCustomerSearch.Location = new System.Drawing.Point(17, 81);
             this.txtCustomerSearch.Name = "txtCustomerSearch";
-            this.txtCustomerSearch.Size = new System.Drawing.Size(175, 26);
+            this.txtCustomerSearch.Size = new System.Drawing.Size(217, 26);
             this.txtCustomerSearch.TabIndex = 3;
             this.txtCustomerSearch.TextChanged += new System.EventHandler(this.txtCustomerSearch_TextChanged);
             // 
@@ -340,7 +345,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label18.Location = new System.Drawing.Point(312, 331);
+            this.label18.Location = new System.Drawing.Point(312, 360);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(85, 20);
             this.label18.TabIndex = 38;
@@ -374,14 +379,14 @@
             this.label19.TabIndex = 41;
             this.label19.Text = "Artist Details";
             // 
-            // lblTotalCost
+            // lblTotalCostResult
             // 
-            this.lblTotalCost.AutoSize = true;
-            this.lblTotalCost.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.lblTotalCost.Location = new System.Drawing.Point(453, 331);
-            this.lblTotalCost.Name = "lblTotalCost";
-            this.lblTotalCost.Size = new System.Drawing.Size(0, 20);
-            this.lblTotalCost.TabIndex = 43;
+            this.lblTotalCostResult.AutoSize = true;
+            this.lblTotalCostResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.lblTotalCostResult.Location = new System.Drawing.Point(453, 360);
+            this.lblTotalCostResult.Name = "lblTotalCostResult";
+            this.lblTotalCostResult.Size = new System.Drawing.Size(0, 20);
+            this.lblTotalCostResult.TabIndex = 43;
             // 
             // lblArtistName
             // 
@@ -392,12 +397,71 @@
             this.lblArtistName.Size = new System.Drawing.Size(0, 20);
             this.lblArtistName.TabIndex = 42;
             // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.label21.Location = new System.Drawing.Point(312, 330);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(97, 20);
+            this.label21.TabIndex = 45;
+            this.label21.Text = "Hourly Price:";
+            // 
+            // lblPricePerHour
+            // 
+            this.lblPricePerHour.AutoSize = true;
+            this.lblPricePerHour.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.lblPricePerHour.Location = new System.Drawing.Point(453, 330);
+            this.lblPricePerHour.Name = "lblPricePerHour";
+            this.lblPricePerHour.Size = new System.Drawing.Size(0, 20);
+            this.lblPricePerHour.TabIndex = 46;
+            // 
+            // btnConfirmBooking
+            // 
+            this.btnConfirmBooking.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(189)))), ((int)(((byte)(50)))));
+            this.btnConfirmBooking.FlatAppearance.BorderSize = 0;
+            this.btnConfirmBooking.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnConfirmBooking.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.btnConfirmBooking.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
+            this.btnConfirmBooking.Location = new System.Drawing.Point(316, 422);
+            this.btnConfirmBooking.Name = "btnConfirmBooking";
+            this.btnConfirmBooking.Size = new System.Drawing.Size(168, 30);
+            this.btnConfirmBooking.TabIndex = 47;
+            this.btnConfirmBooking.Text = "Confirm Booking";
+            this.btnConfirmBooking.UseVisualStyleBackColor = false;
+            this.btnConfirmBooking.Click += new System.EventHandler(this.btnConfirmBooking_Click);
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.label20.Location = new System.Drawing.Point(312, 229);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(103, 20);
+            this.label20.TabIndex = 48;
+            this.label20.Text = "Deposit Paid:";
+            // 
+            // cbDepositPaid
+            // 
+            this.cbDepositPaid.AutoSize = true;
+            this.cbDepositPaid.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbDepositPaid.Location = new System.Drawing.Point(457, 233);
+            this.cbDepositPaid.Name = "cbDepositPaid";
+            this.cbDepositPaid.Size = new System.Drawing.Size(15, 14);
+            this.cbDepositPaid.TabIndex = 49;
+            this.cbDepositPaid.UseVisualStyleBackColor = true;
+            // 
             // frmBookingConfirmation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1038, 622);
-            this.Controls.Add(this.lblTotalCost);
+            this.Controls.Add(this.cbDepositPaid);
+            this.Controls.Add(this.label20);
+            this.Controls.Add(this.btnConfirmBooking);
+            this.Controls.Add(this.lblPricePerHour);
+            this.Controls.Add(this.label21);
+            this.Controls.Add(this.lblTotalCostResult);
             this.Controls.Add(this.lblArtistName);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.lblBookingDates);
@@ -434,6 +498,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmBookingConfirmation";
             this.Text = "frmBookingConfirmation";
+            this.Load += new System.EventHandler(this.frmBookingConfirmation_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -473,7 +538,12 @@
         private System.Windows.Forms.Label lblBookingDates;
         private System.Windows.Forms.Label lblBookingLength;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label lblTotalCost;
+        private System.Windows.Forms.Label lblTotalCostResult;
         private System.Windows.Forms.Label lblArtistName;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label lblPricePerHour;
+        private System.Windows.Forms.Button btnConfirmBooking;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.CheckBox cbDepositPaid;
     }
 }

@@ -28,10 +28,13 @@ namespace Studio76.Classes
     {
         public int ArtistID;
         public string ArtistName;
+        public float Price;
 
-        public Artist(int _id)
+        public Artist(int _id, string _name, float _hourly)
         {
             ArtistID = _id;
+            Price = _hourly;
+            ArtistName = _name;
         }
     }
 }
