@@ -23,9 +23,10 @@ namespace Studio76.Forms
         private List<Booking> allBookings = new List<Booking>();
 
         //Connections
-        //private string connectionString = @"Data Source=DESKTOP-TAB21TK\SQLEXPRESS;Initial Catalog=Studio76;Integrated Security=True";
+        private string connectionString = @"Data Source=DESKTOP-TAB21TK\SQLEXPRESS;Initial Catalog=Studio76;Integrated Security=True";
+        
         //Tech
-        private string connectionString = @"Data Source=B602-012;Initial Catalog=Studio76;Integrated Security=True";
+        //private string connectionString = @"Data Source=B602-012;Initial Catalog=Studio76;Integrated Security=True";
 
         //SQL
         private SqlDataAdapter daBookings, daBookingDetails, daArtistType, daArtists;
@@ -46,17 +47,17 @@ namespace Studio76.Forms
         //Cell Selection
         private List<DataGridViewCell> selectedTimeSlots = new List<DataGridViewCell>();
 
-        private void frmBookings_Load(object sender, EventArgs e)
-        {
-
-        }
-
         public frmBookings()
         {
             InitializeComponent();
 
             SetupDateSelectionContent();
             UpdateArtistSelection();
+        }
+
+        private void frmBookings_Load(object sender, EventArgs e)
+        {
+            GetBoookingInformation();
         }
 
         private void btnConfirmDates_Click(object sender, EventArgs e)
@@ -234,6 +235,11 @@ namespace Studio76.Forms
                     }                 
                 }
             }
+        }
+
+        private void CboAddBookingArtist_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GetBoookingInformation();
         }
 
         public bool HasDatePassed(string _date)
@@ -435,7 +441,7 @@ namespace Studio76.Forms
             {
                 foreach (DataGridViewColumn column in dgAddBookingSelectDate.Columns)
                 {
-                    if(column.HeaderText.Contains(item.bookingDetails.BookingDate))
+                    if (column.HeaderText.Contains(item.bookingDetails.BookingDate))
                     {
                         int id = dgAddBookingSelectDate.Columns.IndexOf(column);
                         for (int i = 0; i < 17; i++)
@@ -451,7 +457,7 @@ namespace Studio76.Forms
                                 }
                             }
                         }
-                    }
+                    }             
                 }
             }
         }
@@ -480,6 +486,11 @@ namespace Studio76.Forms
 
         private void BtnAddBookingFindDate_Click(object sender, EventArgs e)
         {
+            GetBoookingInformation();           
+        }
+
+        private void GetBoookingInformation()
+        {
             if (cboAddBookingArtist.SelectedIndex >= 0 && cboAddBookingArtist.SelectedValue.GetType() != typeof(DataRowView))
             {
                 allBookings.Clear();
@@ -492,7 +503,7 @@ namespace Studio76.Forms
                 PbDatesNext_Click(null, null);
                 PbDatesPervious_Click(null, null);
 
-            }          
+            }
         }
 
         private void ClearPreviousBookings()

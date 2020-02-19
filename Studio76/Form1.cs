@@ -47,7 +47,6 @@ namespace Studio76
             booking.Dock = DockStyle.Fill;
             booking.currentBooking = _booking;
             booking.Show();
-
             booking.SetupInformation();
         }
     }

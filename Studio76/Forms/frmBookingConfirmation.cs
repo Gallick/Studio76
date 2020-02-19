@@ -19,9 +19,10 @@ namespace Studio76.Forms
         public SelectionBooking currentBooking;
 
         //Connections
-        //private string connectionString = @"Data Source=DESKTOP-TAB21TK\SQLEXPRESS;Initial Catalog=Studio76;Integrated Security=True";
+        private string connectionString = @"Data Source=DESKTOP-TAB21TK\SQLEXPRESS;Initial Catalog=Studio76;Integrated Security=True";
+        
         //Tech
-        private string connectionString = @"Data Source=B602-012;Initial Catalog=Studio76;Integrated Security=True";
+        //private string connectionString = @"Data Source=B602-012;Initial Catalog=Studio76;Integrated Security=True";
 
         //SQL
         private SqlDataAdapter daCustomers, daPreviousBookings;
@@ -72,12 +73,48 @@ namespace Studio76.Forms
 
         private void btnConfirmBooking_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Are you sure you want to confirm this booking?", "Confirm Booking?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            //Make sure customer is selected
 
-            if (dialogResult == DialogResult.Yes)
+            if (DoesCustomerExist(txtCustomerSearch.Text))
             {
-                CreateBooking();
+                DialogResult dialogResult = MessageBox.Show("Are you sure you want to confirm this booking?", "Confirm Booking?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (dialogResult == DialogResult.Yes)
+                {
+                    CreateBooking();
+                }
             }
+            else
+            {
+                MessageBox.Show("A Customer with the name of, " + txtCustomerSearch.Text + " does not exist!", "Customer Does not Exist", MessageBoxButtons.OK, MessageBoxIcon.Error); ;
+            }
+        }
+
+        private bool DoesCustomerExist(string _name)
+        {
+            if (string.IsNullOrEmpty(_name) || _name.Contains(' ') == false)
+                return false;
+
+            string[] name = _name.Split(' ');
+
+            string forename = name[0];
+            string surname = name[1];
+
+            string sql = @"SELECT COUNT(*) FROM Customer WHERE CustomerForename = '" + forename + "' AND CustomerSurname = '" + surname +"'";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                conn.Open();
+
+                int customerCount = (int)cmd.ExecuteScalar();
+
+                if (customerCount > 0)
+                    return true;
+
+                return false;
+            }
+              
         }
 
         private void CreateBooking()
@@ -89,56 +126,63 @@ namespace Studio76.Forms
             //BookingID, SessionTime, SessionLength, SessionDate
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                SqlCommand getCount = new SqlCommand("SELECT COUNT(*) FROM Booking", conn);
-                conn.Open();
+                try
+                {
+                    SqlCommand getCount = new SqlCommand("SELECT COUNT(*) FROM Booking", conn);
+                    conn.Open();
 
-                string countReader = getCount.ExecuteScalar().ToString();
-                conn.Close();
+                    string countReader = getCount.ExecuteScalar().ToString();
+                    conn.Close();
 
-                //Assign Booking Variables
-                int bookingID = 1000 + Int32.Parse(countReader);
-                int customerID = selectedCustomerID;
-                int artistID = currentBooking.ArtistDetails.ArtistID;
-                string dateBooked = DateTime.Now.ToString("yyyy-MM-dd");
-                int depositPaid = cbDepositPaid.Checked ? 1 : 0;
+                    //Assign Booking Variables
+                    int bookingID = 1000 + Int32.Parse(countReader);
+                    int customerID = selectedCustomerID;
+                    int artistID = currentBooking.ArtistDetails.ArtistID;
+                    string dateBooked = DateTime.Now.ToString("yyyy-MM-dd");
+                    int depositPaid = cbDepositPaid.Checked ? 1 : 0;
 
-                //Insert into booking table
-                SqlCommand addBooking = new SqlCommand("INSERT INTO Booking (BookingID, CustomerID, ArtistID, DateBooked, DepositPaid) VALUES ('" + bookingID+ "', '" + 
-                    customerID + "','" + artistID + "','" + dateBooked + "', '" + depositPaid + "')", conn);
-                conn.Open();
+                    //Insert into booking table
+                    SqlCommand addBooking = new SqlCommand("INSERT INTO Booking (BookingID, CustomerID, ArtistID, DateBooked, DepositPaid) VALUES ('" + bookingID + "', '" +
+                        customerID + "','" + artistID + "','" + dateBooked + "', '" + depositPaid + "')", conn);
+                    conn.Open();
 
-                SqlDataReader bookingReader = addBooking.ExecuteReader();
-                while (bookingReader.Read()) { }
-                conn.Close();
+                    SqlDataReader bookingReader = addBooking.ExecuteReader();
+                    while (bookingReader.Read()) { }
+                    conn.Close();
 
-                //Assign Booking Details Variables
-                TimeSpan sessionTime = currentBooking.StartTime;
-                int sessionLength = currentBooking.BookingLength;
+                    //Assign Booking Details Variables
+                    TimeSpan sessionTime = currentBooking.StartTime;
+                    int sessionLength = currentBooking.BookingLength;
 
-                //Convert date string to correct format
-                string bookingDate = currentBooking.BookingDate.Split('\n')[1];
-                bookingDate = bookingDate.Trim();
+                    //Convert date string to correct format
+                    string bookingDate = currentBooking.BookingDate.Split('\n')[1];
+                    bookingDate = bookingDate.Trim();
 
-                MessageBox.Show(bookingDate);
-                string[] dateParts = bookingDate.Split('/');
+                    string[] dateParts = bookingDate.Split('/');
 
-                int day = Int32.Parse(dateParts[0]);
-                int month = Int32.Parse(dateParts[1]);
-                int year = Int32.Parse(dateParts[2]);
+                    int day = Int32.Parse(dateParts[0]);
+                    int month = Int32.Parse(dateParts[1]);
+                    int year = Int32.Parse(dateParts[2]);
 
-                DateTime dt = new DateTime(year, month, day);
+                    DateTime dt = new DateTime(year, month, day);
 
-                string finalBooking = dt.ToString("M/d/yyyy");
-                MessageBox.Show(finalBooking);
+                    string finalBooking = dt.ToString("M/d/yyyy");
 
-                //Insert into Booking Details
-                SqlCommand addBookingDetails = new SqlCommand("INSERT INTO BookingDetails (BookingID, SessionTime, SessionLength, SessionDate) VALUES ('" + bookingID + "', '" +
-                    sessionTime + "','" + sessionLength + "','" + finalBooking + "')", conn);
-                conn.Open();
+                    //Insert into Booking Details
+                    SqlCommand addBookingDetails = new SqlCommand("INSERT INTO BookingDetails (BookingID, SessionTime, SessionLength, SessionDate) VALUES ('" + bookingID + "', '" +
+                        sessionTime + "','" + sessionLength + "','" + finalBooking + "')", conn);
+                    conn.Open();
 
-                SqlDataReader bookingDetailsReader = addBookingDetails.ExecuteReader();
-                while (bookingDetailsReader.Read()) { }
-                conn.Close();
+                    SqlDataReader bookingDetailsReader = addBookingDetails.ExecuteReader();
+                    while (bookingDetailsReader.Read()) { }
+                    conn.Close();
+
+                    MessageBox.Show("Booking Created for " + bookingDate + " at " + sessionTime + "!", "Booking Created", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("There was an error creating the booking!", "Error Creating Booking", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
