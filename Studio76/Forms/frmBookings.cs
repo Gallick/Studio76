@@ -21,6 +21,7 @@ namespace Studio76.Forms
 
         //Bookings
         private List<Booking> allBookings = new List<Booking>();
+        private List<Booking> allArtistBookings = new List<Booking>();
 
         //Connections
         private string connectionString = @"Data Source=DESKTOP-TAB21TK\SQLEXPRESS;Initial Catalog=Studio76;Integrated Security=True";
@@ -29,13 +30,10 @@ namespace Studio76.Forms
         //private string connectionString = @"Data Source=B602-012;Initial Catalog=Studio76;Integrated Security=True";
 
         //SQL
-        private SqlDataAdapter daBookings, daBookingDetails, daArtistType, daArtists;
+        private SqlDataAdapter daBookings, daBookingDetails, daArtistType, daArtists, daEditBookings;
         private DataSet dsStudio = new DataSet();
-        private SqlCommand cmdBookings, cmdBookingDetails, cmdArtistType, cmdArtists;
-        private SqlCommandBuilder cmdBBookings, cmdBBookingdetails, cmdBArtistDetails, cmdBArtist;
-        private DataRow drBooking, drBookingDetails, drArtistType, drArtistDetails, drArtist;
 
-        private string sqlBookings, sqlBookingDetails, sqlArtistDetails, sqlArtist;
+        private string sqlBookings, sqlBookingDetails, sqlArtist, sqlEditBookingCustomerSearch;
 
         //Color Variables
         private Color defaultCellBackColour;
@@ -47,18 +45,21 @@ namespace Studio76.Forms
         //Cell Selection
         private List<DataGridViewCell> selectedTimeSlots = new List<DataGridViewCell>();
 
+        //Edit Options
+        public bool isEditOpen = false;
+
         public frmBookings()
         {
             InitializeComponent();
+            GetAllBookings();
 
             SetupDateSelectionContent();
             UpdateArtistSelection();
         }
 
-        private void frmBookings_Load(object sender, EventArgs e)
-        {
-            GetBoookingInformation();
-        }
+        #region Add Booking
+
+        private void frmBookings_Load(object sender, EventArgs e) => GetBoookingInformation();
 
         private void btnConfirmDates_Click(object sender, EventArgs e)
         {
@@ -299,6 +300,11 @@ namespace Studio76.Forms
             }
         }
 
+        private void CboEditBookingArtistName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
         private void DisableSundayCells()
         {
             //Sunday has in index of 6
@@ -365,7 +371,7 @@ namespace Studio76.Forms
                 b.DateBooked = dr["DateBooked"].ToString().Split(' ')[0];
 
                 b.bookingDetails = GetBookingDetails(Int32.Parse(dr["BookingID"].ToString()));
-                allBookings.Add(b);
+                allArtistBookings.Add(b);
             }
             UpdateDisplayForBookings();
 
@@ -437,7 +443,7 @@ namespace Studio76.Forms
         {
             SetupBookingTable();
 
-            foreach (Booking item in allBookings)
+            foreach (Booking item in allArtistBookings)
             {
                 foreach (DataGridViewColumn column in dgAddBookingSelectDate.Columns)
                 {
@@ -483,6 +489,29 @@ namespace Studio76.Forms
             }
         }
 
+        private void BtnEditBooking_Click(object sender, EventArgs e)
+        {
+            if(!isEditOpen)
+            {
+                Booking b = GetSelectedBooking();
+
+                EditBookingForm eb = new EditBookingForm();
+                eb.Master = this;
+                eb.currentBooking = b;
+                eb.Show();
+
+                isEditOpen = true;
+            }
+            else
+            {
+                MessageBox.Show("Edit Booking form is already open, please close it and try again!", "Form Open", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Label2_Click(object sender, EventArgs e)
+        {
+
+        }
 
         private void BtnAddBookingFindDate_Click(object sender, EventArgs e)
         {
@@ -493,7 +522,7 @@ namespace Studio76.Forms
         {
             if (cboAddBookingArtist.SelectedIndex >= 0 && cboAddBookingArtist.SelectedValue.GetType() != typeof(DataRowView))
             {
-                allBookings.Clear();
+                allArtistBookings.Clear();
 
                 ClearPreviousBookings();
 
@@ -537,5 +566,74 @@ namespace Studio76.Forms
         {
             UpdateArtistSelection();
         }
+
+        #endregion
+
+        #region Edit Booking
+        private void TcBookings_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Edit Bookings
+            if(tcBookings.SelectedIndex == 1)
+            {
+             
+            }
+        }
+        
+       private void GetAllBookings()
+        {
+            sqlBookings = @"SELECT * FROM Booking";
+
+            daEditBookings = new SqlDataAdapter(sqlBookings, connectionString);
+            daEditBookings.FillSchema(dsStudio, SchemaType.Source, "AllBookings");
+
+            daEditBookings.Fill(dsStudio, "AllBookings");
+
+            foreach (DataRow dr in dsStudio.Tables["AllBookings"].Rows)
+            {
+                Booking b = new Booking();
+                b.BookingID = Int32.Parse(dr["BookingID"].ToString());
+                b.ArtistID = Int32.Parse(dr["ArtistID"].ToString());
+                b.CustomerID = Int32.Parse(dr["CustomerID"].ToString());
+                b.DateBooked = dr["DateBooked"].ToString().Split(' ')[0];
+
+                b.bookingDetails = GetBookingDetails(b.BookingID);
+                allBookings.Add(b);
+            }
+
+            UpdateEditBookingTable();
+        }
+        private void UpdateEditBookingTable()
+        {
+            dgvEditBookings.DataSource = allBookings.Select(Booking => new {
+                Booking.BookingID,
+                Booking.CustomerName,
+                Booking.ArtistName,
+                Booking.bookingDetails.BookingDate,
+                Booking.bookingDetails.Time,
+                Booking.BookingLengthTime,
+                Booking.bookingDetails.DepositPaid
+            }).ToList();
+
+        }
+
+        private Booking GetSelectedBooking()
+        {
+            foreach (DataGridViewRow row in dgvEditBookings.SelectedRows)
+            {
+                int id = Int32.Parse(row.Cells[0].Value.ToString());
+
+                foreach (Booking booking in allBookings)
+                {
+                    if(id == booking.BookingID)
+                    {
+                        return booking;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        #endregion
     }
 }
