@@ -29,10 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmBookings));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tcBookings = new System.Windows.Forms.TabControl();
             this.tpAdd = new System.Windows.Forms.TabPage();
             this.btnConfirmDates = new System.Windows.Forms.Button();
@@ -51,10 +53,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.cboAddBookingArtist = new System.Windows.Forms.ComboBox();
             this.tpEdit = new System.Windows.Forms.TabPage();
+            this.btnEditBooking = new System.Windows.Forms.Button();
             this.dgvEditBookings = new System.Windows.Forms.DataGridView();
             this.tpRemove = new System.Windows.Forms.TabPage();
             this.lblBookingsHeader = new System.Windows.Forms.Label();
-            this.btnEditBooking = new System.Windows.Forms.Button();
+            this.dgDeleteBookings = new System.Windows.Forms.DataGridView();
+            this.btnDeleteBooking = new System.Windows.Forms.Button();
             this.tcBookings.SuspendLayout();
             this.tpAdd.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDatesNext)).BeginInit();
@@ -62,6 +66,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgAddBookingSelectDate)).BeginInit();
             this.tpEdit.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEditBookings)).BeginInit();
+            this.tpRemove.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgDeleteBookings)).BeginInit();
             this.SuspendLayout();
             // 
             // tcBookings
@@ -152,14 +158,14 @@
             // 
             this.dgAddBookingSelectDate.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgAddBookingSelectDate.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(54)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgAddBookingSelectDate.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(54)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgAddBookingSelectDate.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgAddBookingSelectDate.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgAddBookingSelectDate.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.cbMonday,
@@ -174,14 +180,14 @@
             this.dgAddBookingSelectDate.MultiSelect = false;
             this.dgAddBookingSelectDate.Name = "dgAddBookingSelectDate";
             this.dgAddBookingSelectDate.ReadOnly = true;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(59)))), ((int)(((byte)(72)))));
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgAddBookingSelectDate.RowHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(59)))), ((int)(((byte)(72)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgAddBookingSelectDate.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgAddBookingSelectDate.RowTemplate.Height = 40;
             this.dgAddBookingSelectDate.Size = new System.Drawing.Size(832, 509);
             this.dgAddBookingSelectDate.TabIndex = 12;
@@ -275,32 +281,46 @@
             this.tpEdit.Text = "Edit";
             this.tpEdit.UseVisualStyleBackColor = true;
             // 
+            // btnEditBooking
+            // 
+            this.btnEditBooking.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(126)))), ((int)(((byte)(176)))));
+            this.btnEditBooking.FlatAppearance.BorderSize = 0;
+            this.btnEditBooking.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEditBooking.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
+            this.btnEditBooking.Location = new System.Drawing.Point(848, 545);
+            this.btnEditBooking.Name = "btnEditBooking";
+            this.btnEditBooking.Size = new System.Drawing.Size(168, 30);
+            this.btnEditBooking.TabIndex = 17;
+            this.btnEditBooking.Text = "Edit Booking";
+            this.btnEditBooking.UseVisualStyleBackColor = false;
+            this.btnEditBooking.Click += new System.EventHandler(this.BtnEditBooking_Click);
+            // 
             // dgvEditBookings
             // 
             this.dgvEditBookings.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvEditBookings.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(54)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvEditBookings.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(54)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvEditBookings.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvEditBookings.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEditBookings.EnableHeadersVisualStyles = false;
             this.dgvEditBookings.Location = new System.Drawing.Point(6, 6);
             this.dgvEditBookings.MultiSelect = false;
             this.dgvEditBookings.Name = "dgvEditBookings";
             this.dgvEditBookings.ReadOnly = true;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(59)))), ((int)(((byte)(72)))));
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvEditBookings.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(59)))), ((int)(((byte)(72)))));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvEditBookings.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvEditBookings.RowTemplate.Height = 40;
             this.dgvEditBookings.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvEditBookings.Size = new System.Drawing.Size(1010, 536);
@@ -308,6 +328,8 @@
             // 
             // tpRemove
             // 
+            this.tpRemove.Controls.Add(this.btnDeleteBooking);
+            this.tpRemove.Controls.Add(this.dgDeleteBookings);
             this.tpRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tpRemove.Location = new System.Drawing.Point(4, 29);
             this.tpRemove.Name = "tpRemove";
@@ -326,19 +348,50 @@
             this.lblBookingsHeader.TabIndex = 1;
             this.lblBookingsHeader.Text = "Bookings";
             // 
-            // btnEditBooking
+            // dgDeleteBookings
             // 
-            this.btnEditBooking.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(126)))), ((int)(((byte)(176)))));
-            this.btnEditBooking.FlatAppearance.BorderSize = 0;
-            this.btnEditBooking.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEditBooking.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
-            this.btnEditBooking.Location = new System.Drawing.Point(848, 545);
-            this.btnEditBooking.Name = "btnEditBooking";
-            this.btnEditBooking.Size = new System.Drawing.Size(168, 30);
-            this.btnEditBooking.TabIndex = 17;
-            this.btnEditBooking.Text = "Edit Booking";
-            this.btnEditBooking.UseVisualStyleBackColor = false;
-            this.btnEditBooking.Click += new System.EventHandler(this.BtnEditBooking_Click);
+            this.dgDeleteBookings.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgDeleteBookings.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(54)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgDeleteBookings.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            this.dgDeleteBookings.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgDeleteBookings.EnableHeadersVisualStyles = false;
+            this.dgDeleteBookings.Location = new System.Drawing.Point(6, 6);
+            this.dgDeleteBookings.MultiSelect = false;
+            this.dgDeleteBookings.Name = "dgDeleteBookings";
+            this.dgDeleteBookings.ReadOnly = true;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(59)))), ((int)(((byte)(72)))));
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgDeleteBookings.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            this.dgDeleteBookings.RowTemplate.Height = 40;
+            this.dgDeleteBookings.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgDeleteBookings.Size = new System.Drawing.Size(1010, 536);
+            this.dgDeleteBookings.TabIndex = 17;
+            // 
+            // btnDeleteBooking
+            // 
+            this.btnDeleteBooking.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(54)))), ((int)(((byte)(22)))));
+            this.btnDeleteBooking.FlatAppearance.BorderSize = 0;
+            this.btnDeleteBooking.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDeleteBooking.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
+            this.btnDeleteBooking.Location = new System.Drawing.Point(845, 545);
+            this.btnDeleteBooking.Name = "btnDeleteBooking";
+            this.btnDeleteBooking.Size = new System.Drawing.Size(168, 30);
+            this.btnDeleteBooking.TabIndex = 18;
+            this.btnDeleteBooking.Text = "Delete Booking";
+            this.btnDeleteBooking.UseVisualStyleBackColor = false;
+            this.btnDeleteBooking.Click += new System.EventHandler(this.BtnDeleteBooking_Click);
             // 
             // frmBookings
             // 
@@ -359,6 +412,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgAddBookingSelectDate)).EndInit();
             this.tpEdit.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvEditBookings)).EndInit();
+            this.tpRemove.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgDeleteBookings)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -388,5 +443,7 @@
         private System.Windows.Forms.DataGridView dgvEditBookings;
         private System.Windows.Forms.Button btnConfirmDates;
         private System.Windows.Forms.Button btnEditBooking;
+        private System.Windows.Forms.DataGridView dgDeleteBookings;
+        private System.Windows.Forms.Button btnDeleteBooking;
     }
 }

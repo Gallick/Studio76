@@ -54,7 +54,9 @@ namespace Studio76.Forms
             GetAllBookings();
 
             SetupDateSelectionContent();
+
             UpdateArtistSelection();
+            UpdateDeleteBookingForm();
         }
 
         #region Add Booking
@@ -67,8 +69,8 @@ namespace Studio76.Forms
             {
                 int artistID = Int32.Parse(cboAddBookingArtist.SelectedValue.ToString());
 
-                SelectionBooking s = new SelectionBooking(DateTime.Now.ToShortDateString(), 
-                    TimeSpan.Parse(selectedTimeSlots[0].Value.ToString()), selectedTimeSlots.Count,
+                SelectionBooking s = new SelectionBooking(DateTime.Now.ToShortDateString(),
+                    BookingStartTime(), selectedTimeSlots.Count,
                     GetDateFromBookings(selectedTimeSlots[0]), 
                     new Artist(artistID, GetArtistName(artistID), GetArtistHourlyPrice(artistID)));
 
@@ -80,6 +82,20 @@ namespace Studio76.Forms
             {
                 MessageBox.Show("You must select more than 1 slot for the booking", "No Slots Selected", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private TimeSpan BookingStartTime()
+        {
+            List<TimeSpan> times = new List<TimeSpan>();
+
+            for (int i = 0; i < selectedTimeSlots.Count; i++)
+            {
+                TimeSpan t = TimeSpan.Parse(selectedTimeSlots[0].Value.ToString());
+                times.Add(t);
+            }
+
+            return times.Min();
+            
         }
 
         private string GetDateFromBookings(DataGridViewCell _cell)
@@ -535,6 +551,47 @@ namespace Studio76.Forms
             }
         }
 
+        private void BtnDeleteBooking_Click(object sender, EventArgs e)
+        {
+            if(dgvEditBookings.SelectedRows.Count > 0)
+            {
+                try
+                {
+                    using (SqlConnection conn = new SqlConnection(connectionString))
+                    {
+                        Booking b = GetSelectedBookingDelete();
+                        if (b != null)
+                        {
+                            string sql = @"DELETE FROM BookingDetails WHERE BookingID = '" + b.BookingID+"'; DELETE FROM Booking WHERE BookingID = '" + b.BookingID + "';";
+                            SqlCommand cmd = new SqlCommand(sql, conn);
+                            conn.Open();
+
+                            cmd.ExecuteNonQuery();
+
+                            conn.Close();
+
+                            MessageBox.Show("Booking Successfully Deleted", "Booking Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            masterForm.ChangeToBookingForm();
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error Getting Selected Booking, Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error Deleting Booking!\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }               
+            }
+            else
+            {
+                MessageBox.Show("Please selected a booking", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void ClearPreviousBookings()
         {
             if (dsStudio.Tables["Bookings"] != null && dsStudio.Tables["BookingDetails"] != null)
@@ -581,6 +638,8 @@ namespace Studio76.Forms
         
        private void GetAllBookings()
         {
+            allBookings.Clear();
+
             sqlBookings = @"SELECT * FROM Booking";
 
             daEditBookings = new SqlDataAdapter(sqlBookings, connectionString);
@@ -625,6 +684,41 @@ namespace Studio76.Forms
                 foreach (Booking booking in allBookings)
                 {
                     if(id == booking.BookingID)
+                    {
+                        return booking;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        #endregion
+
+        #region Delete Booking
+        private void UpdateDeleteBookingForm()
+        {
+            dgDeleteBookings.DataSource = allBookings.Select(Booking => new {
+                Booking.BookingID,
+                Booking.CustomerName,
+                Booking.ArtistName,
+                Booking.bookingDetails.BookingDate,
+                Booking.bookingDetails.Time,
+                Booking.BookingLengthTime,
+                Booking.bookingDetails.DepositPaid
+            }).ToList();
+
+        }
+
+        private Booking GetSelectedBookingDelete()
+        {
+            foreach (DataGridViewRow row in dgDeleteBookings.SelectedRows)
+            {
+                int id = Int32.Parse(row.Cells[0].Value.ToString());
+
+                foreach (Booking booking in allBookings)
+                {
+                    if (id == booking.BookingID)
                     {
                         return booking;
                     }

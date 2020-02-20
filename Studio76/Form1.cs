@@ -22,6 +22,16 @@ namespace Studio76
 
         private void Initialize()
         {
+            ChangeToBookingForm();
+        }
+        
+        public void ClearCurrentForm()
+        {
+            pnlMain.Controls.Clear();
+        }
+
+        public void ChangeToBookingForm()
+        {
             frmBookings booking = new frmBookings();
             booking.TopLevel = false;
             pnlMain.Controls.Add(booking);
@@ -31,11 +41,6 @@ namespace Studio76
             booking.masterForm = this;
 
             booking.Show();
-        }
-        
-        public void ClearCurrentForm()
-        {
-            pnlMain.Controls.Clear();
         }
 
         public void ChangeFormToBookingConfirmation(SelectionBooking _booking)
@@ -48,6 +53,12 @@ namespace Studio76
             booking.currentBooking = _booking;
             booking.Show();
             booking.SetupInformation();
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            ClearCurrentForm();
+            ChangeToBookingForm();
         }
     }
 }
