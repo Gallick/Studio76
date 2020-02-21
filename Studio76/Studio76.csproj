@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Booking.cs" />
+    <Compile Include="Classes\Customer.cs" />
     <Compile Include="Classes\SelectionBooking.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -72,6 +73,18 @@
     <Compile Include="Forms\frmBookings.Designer.cs">
       <DependentUpon>frmBookings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmCustomer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmCustomer.Designer.cs">
+      <DependentUpon>frmCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmEditCustomer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmEditCustomer.Designer.cs">
+      <DependentUpon>frmEditCustomer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -85,6 +98,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmBookings.resx">
       <DependentUpon>frmBookings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmCustomer.resx">
+      <DependentUpon>frmCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmEditCustomer.resx">
+      <DependentUpon>frmEditCustomer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

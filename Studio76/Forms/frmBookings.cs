@@ -24,10 +24,10 @@ namespace Studio76.Forms
         private List<Booking> allArtistBookings = new List<Booking>();
 
         //Connections
-        private string connectionString = @"Data Source=DESKTOP-TAB21TK\SQLEXPRESS;Initial Catalog=Studio76;Integrated Security=True";
+        //private string connectionString = @"Data Source=DESKTOP-TAB21TK\SQLEXPRESS;Initial Catalog=Studio76;Integrated Security=True";
         
         //Tech
-        //private string connectionString = @"Data Source=B602-012;Initial Catalog=Studio76;Integrated Security=True";
+        private string connectionString = @"Data Source=B602-012;Initial Catalog=Studio76;Integrated Security=True";
 
         //SQL
         private SqlDataAdapter daBookings, daBookingDetails, daArtistType, daArtists, daEditBookings;
@@ -74,6 +74,7 @@ namespace Studio76.Forms
                     GetDateFromBookings(selectedTimeSlots[0]), 
                     new Artist(artistID, GetArtistName(artistID), GetArtistHourlyPrice(artistID)));
 
+               
                 masterForm.ClearCurrentForm();
                 masterForm.ChangeFormToBookingConfirmation(s);
 
@@ -516,7 +517,7 @@ namespace Studio76.Forms
                 eb.currentBooking = b;
                 eb.Show();
 
-                isEditOpen = true;
+                isEditOpen = true;              
             }
             else
             {
@@ -534,7 +535,7 @@ namespace Studio76.Forms
             GetBoookingInformation();           
         }
 
-        private void GetBoookingInformation()
+        public void GetBoookingInformation()
         {
             if (cboAddBookingArtist.SelectedIndex >= 0 && cboAddBookingArtist.SelectedValue.GetType() != typeof(DataRowView))
             {
@@ -570,10 +571,27 @@ namespace Studio76.Forms
 
                             conn.Close();
 
+                            int id = 0;
+
+                            foreach (Booking booking in allBookings)
+                            {
+                                if(booking.BookingID == b.BookingID)
+                                {
+                                    id = allBookings.IndexOf(booking);
+                                }
+                            }
+
+                            allBookings.RemoveAt(id);
+
+                            UpdateDeleteBookingForm();
+                            UpdateEditBookingTable();
+
+                            dgDeleteBookings.Update();
+                            dgvEditBookings.Update();
+
+                            GetBoookingInformation();
+
                             MessageBox.Show("Booking Successfully Deleted", "Booking Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                            masterForm.ChangeToBookingForm();
-
                         }
                         else
                         {

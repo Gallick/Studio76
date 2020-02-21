@@ -498,6 +498,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmBookingConfirmation";
             this.Text = "frmBookingConfirmation";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmBookingConfirmation_FormClosing);
             this.Load += new System.EventHandler(this.frmBookingConfirmation_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

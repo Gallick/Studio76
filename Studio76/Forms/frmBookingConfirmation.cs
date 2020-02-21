@@ -17,12 +17,13 @@ namespace Studio76.Forms
     {
         //Details
         public SelectionBooking currentBooking;
+        public frmMain Master;
 
         //Connections
-        private string connectionString = @"Data Source=DESKTOP-TAB21TK\SQLEXPRESS;Initial Catalog=Studio76;Integrated Security=True";
+        //private string connectionString = @"Data Source=DESKTOP-TAB21TK\SQLEXPRESS;Initial Catalog=Studio76;Integrated Security=True";
         
         //Tech
-        //private string connectionString = @"Data Source=B602-012;Initial Catalog=Studio76;Integrated Security=True";
+        private string connectionString = @"Data Source=B602-012;Initial Catalog=Studio76;Integrated Security=True";
 
         //SQL
         private SqlDataAdapter daCustomers, daPreviousBookings;
@@ -178,12 +179,19 @@ namespace Studio76.Forms
                     conn.Close();
 
                     MessageBox.Show("Booking Created for " + bookingDate + " at " + sessionTime + "!", "Booking Created", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    this.Close();
                 }
                 catch(Exception ex)
                 {
                     MessageBox.Show("There was an error creating the booking!", "Error Creating Booking", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void frmBookingConfirmation_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Master.ChangeToBookingForm();
         }
 
         private void txtCustomerSearch_TextChanged(object sender, EventArgs e)

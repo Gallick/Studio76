@@ -46,6 +46,8 @@ namespace Studio76
         public void ChangeFormToBookingConfirmation(SelectionBooking _booking)
         {
             frmBookingConfirmation booking = new frmBookingConfirmation();
+            booking.Master = this;
+
             booking.TopLevel = false;
             pnlMain.Controls.Add(booking);
             booking.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -55,10 +57,28 @@ namespace Studio76
             booking.SetupInformation();
         }
 
+        private void ChangeToCustomerForm()
+        {
+            ClearCurrentForm();
+
+            frmCustomer customer = new frmCustomer();
+
+            customer.TopLevel = false;
+            pnlMain.Controls.Add(customer);
+            customer.FormBorderStyle = FormBorderStyle.None;
+            customer.Dock = DockStyle.Fill;
+            customer.Show();
+        }
+
         private void Button1_Click(object sender, EventArgs e)
         {
             ClearCurrentForm();
             ChangeToBookingForm();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ChangeToCustomerForm();
         }
     }
 }
