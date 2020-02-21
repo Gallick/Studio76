@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblCustomerHeader = new System.Windows.Forms.Label();
             this.tpRemove = new System.Windows.Forms.TabPage();
+            this.btnDeleteCustomer = new System.Windows.Forms.Button();
+            this.dgvDeleteCustomer = new System.Windows.Forms.DataGridView();
             this.tpEdit = new System.Windows.Forms.TabPage();
             this.btnEditCustomer = new System.Windows.Forms.Button();
             this.dgvEditCustomer = new System.Windows.Forms.DataGridView();
@@ -61,14 +63,18 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtCustomerForename = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.dgvDeleteCustomer = new System.Windows.Forms.DataGridView();
-            this.btnDeleteCustomer = new System.Windows.Forms.Button();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnAllCustomers = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.crvReports = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
             this.tpRemove.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDeleteCustomer)).BeginInit();
             this.tpEdit.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEditCustomer)).BeginInit();
             this.tcBookings.SuspendLayout();
             this.tpAdd.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDeleteCustomer)).BeginInit();
+            this.tabPage1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblCustomerHeader
@@ -92,6 +98,51 @@
             this.tpRemove.TabIndex = 2;
             this.tpRemove.Text = "Remove";
             this.tpRemove.UseVisualStyleBackColor = true;
+            // 
+            // btnDeleteCustomer
+            // 
+            this.btnDeleteCustomer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(54)))), ((int)(((byte)(22)))));
+            this.btnDeleteCustomer.FlatAppearance.BorderSize = 0;
+            this.btnDeleteCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDeleteCustomer.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
+            this.btnDeleteCustomer.Location = new System.Drawing.Point(848, 548);
+            this.btnDeleteCustomer.Name = "btnDeleteCustomer";
+            this.btnDeleteCustomer.Size = new System.Drawing.Size(168, 30);
+            this.btnDeleteCustomer.TabIndex = 21;
+            this.btnDeleteCustomer.Text = "Delete Customer";
+            this.btnDeleteCustomer.UseVisualStyleBackColor = false;
+            this.btnDeleteCustomer.Click += new System.EventHandler(this.btnDeleteCustomer_Click);
+            // 
+            // dgvDeleteCustomer
+            // 
+            this.dgvDeleteCustomer.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvDeleteCustomer.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(54)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvDeleteCustomer.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            this.dgvDeleteCustomer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvDeleteCustomer.EnableHeadersVisualStyles = false;
+            this.dgvDeleteCustomer.Location = new System.Drawing.Point(6, 6);
+            this.dgvDeleteCustomer.MultiSelect = false;
+            this.dgvDeleteCustomer.Name = "dgvDeleteCustomer";
+            this.dgvDeleteCustomer.ReadOnly = true;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(59)))), ((int)(((byte)(72)))));
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvDeleteCustomer.RowHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            this.dgvDeleteCustomer.RowTemplate.Height = 40;
+            this.dgvDeleteCustomer.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvDeleteCustomer.Size = new System.Drawing.Size(1010, 536);
+            this.dgvDeleteCustomer.TabIndex = 20;
             // 
             // tpEdit
             // 
@@ -124,28 +175,28 @@
             // 
             this.dgvEditCustomer.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvEditCustomer.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(54)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvEditCustomer.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(54)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvEditCustomer.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
             this.dgvEditCustomer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEditCustomer.EnableHeadersVisualStyles = false;
             this.dgvEditCustomer.Location = new System.Drawing.Point(6, 6);
             this.dgvEditCustomer.MultiSelect = false;
             this.dgvEditCustomer.Name = "dgvEditCustomer";
             this.dgvEditCustomer.ReadOnly = true;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(59)))), ((int)(((byte)(72)))));
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvEditCustomer.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(59)))), ((int)(((byte)(72)))));
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvEditCustomer.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.dgvEditCustomer.RowTemplate.Height = 40;
             this.dgvEditCustomer.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvEditCustomer.Size = new System.Drawing.Size(1010, 536);
@@ -156,6 +207,7 @@
             this.tcBookings.Controls.Add(this.tpAdd);
             this.tcBookings.Controls.Add(this.tpEdit);
             this.tcBookings.Controls.Add(this.tpRemove);
+            this.tcBookings.Controls.Add(this.tabPage1);
             this.tcBookings.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tcBookings.Location = new System.Drawing.Point(12, 36);
             this.tcBookings.Name = "tcBookings";
@@ -389,50 +441,51 @@
             this.label2.TabIndex = 10;
             this.label2.Text = "Customer Forename";
             // 
-            // dgvDeleteCustomer
+            // tabPage1
             // 
-            this.dgvDeleteCustomer.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvDeleteCustomer.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(54)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvDeleteCustomer.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            this.dgvDeleteCustomer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDeleteCustomer.EnableHeadersVisualStyles = false;
-            this.dgvDeleteCustomer.Location = new System.Drawing.Point(6, 6);
-            this.dgvDeleteCustomer.MultiSelect = false;
-            this.dgvDeleteCustomer.Name = "dgvDeleteCustomer";
-            this.dgvDeleteCustomer.ReadOnly = true;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(59)))), ((int)(((byte)(72)))));
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvDeleteCustomer.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
-            this.dgvDeleteCustomer.RowTemplate.Height = 40;
-            this.dgvDeleteCustomer.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDeleteCustomer.Size = new System.Drawing.Size(1010, 536);
-            this.dgvDeleteCustomer.TabIndex = 20;
+            this.tabPage1.Controls.Add(this.btnAllCustomers);
+            this.tabPage1.Controls.Add(this.panel1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 29);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1022, 581);
+            this.tabPage1.TabIndex = 3;
+            this.tabPage1.Text = "Reports";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // btnDeleteCustomer
+            // btnAllCustomers
             // 
-            this.btnDeleteCustomer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(54)))), ((int)(((byte)(22)))));
-            this.btnDeleteCustomer.FlatAppearance.BorderSize = 0;
-            this.btnDeleteCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDeleteCustomer.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
-            this.btnDeleteCustomer.Location = new System.Drawing.Point(848, 548);
-            this.btnDeleteCustomer.Name = "btnDeleteCustomer";
-            this.btnDeleteCustomer.Size = new System.Drawing.Size(168, 30);
-            this.btnDeleteCustomer.TabIndex = 21;
-            this.btnDeleteCustomer.Text = "Delete Customer";
-            this.btnDeleteCustomer.UseVisualStyleBackColor = false;
-            this.btnDeleteCustomer.Click += new System.EventHandler(this.btnDeleteCustomer_Click);
+            this.btnAllCustomers.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(126)))), ((int)(((byte)(176)))));
+            this.btnAllCustomers.FlatAppearance.BorderSize = 0;
+            this.btnAllCustomers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAllCustomers.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
+            this.btnAllCustomers.Location = new System.Drawing.Point(3, 6);
+            this.btnAllCustomers.Name = "btnAllCustomers";
+            this.btnAllCustomers.Size = new System.Drawing.Size(163, 30);
+            this.btnAllCustomers.TabIndex = 20;
+            this.btnAllCustomers.Text = "All Customers";
+            this.btnAllCustomers.UseVisualStyleBackColor = false;
+            this.btnAllCustomers.Click += new System.EventHandler(this.btnAllCustomers_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.crvReports);
+            this.panel1.Location = new System.Drawing.Point(172, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(847, 575);
+            this.panel1.TabIndex = 19;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // crvReports
+            // 
+            this.crvReports.ActiveViewIndex = -1;
+            this.crvReports.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.crvReports.Cursor = System.Windows.Forms.Cursors.Default;
+            this.crvReports.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.crvReports.Location = new System.Drawing.Point(0, 0);
+            this.crvReports.Name = "crvReports";
+            this.crvReports.Size = new System.Drawing.Size(847, 575);
+            this.crvReports.TabIndex = 0;
             // 
             // frmCustomer
             // 
@@ -445,12 +498,14 @@
             this.Name = "frmCustomer";
             this.Text = "frmCustomer";
             this.tpRemove.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDeleteCustomer)).EndInit();
             this.tpEdit.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvEditCustomer)).EndInit();
             this.tcBookings.ResumeLayout(false);
             this.tpAdd.ResumeLayout(false);
             this.tpAdd.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDeleteCustomer)).EndInit();
+            this.tabPage1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -489,5 +544,9 @@
         private System.Windows.Forms.DataGridView dgvEditCustomer;
         private System.Windows.Forms.DataGridView dgvDeleteCustomer;
         private System.Windows.Forms.Button btnDeleteCustomer;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.Button btnAllCustomers;
+        private System.Windows.Forms.Panel panel1;
+        private CrystalDecisions.Windows.Forms.CrystalReportViewer crvReports;
     }
 }

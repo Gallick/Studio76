@@ -1,4 +1,6 @@
-﻿using Studio76.Classes;
+﻿using CrystalDecisions.CrystalReports.Engine;
+using Studio76.Classes;
+using Studio76.Reports;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -417,6 +419,20 @@ namespace Studio76.Forms
             {
                 MessageBox.Show("Error Selecting Customer!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnAllCustomers_Click(object sender, EventArgs e)
+        {
+            ReportDocument report = new ReportDocument();
+            report.Load(@"C:\Users\gal16100778\source\repos\Studio76\Studio76\Reports\Customers.rpt");
+
+            crvReports.ReportSource = report;
+            crvReports.Refresh();
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

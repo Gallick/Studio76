@@ -56,9 +56,13 @@
             this.btnEditBooking = new System.Windows.Forms.Button();
             this.dgvEditBookings = new System.Windows.Forms.DataGridView();
             this.tpRemove = new System.Windows.Forms.TabPage();
-            this.lblBookingsHeader = new System.Windows.Forms.Label();
-            this.dgDeleteBookings = new System.Windows.Forms.DataGridView();
             this.btnDeleteBooking = new System.Windows.Forms.Button();
+            this.dgDeleteBookings = new System.Windows.Forms.DataGridView();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnAllBookings = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.crvReports = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
+            this.lblBookingsHeader = new System.Windows.Forms.Label();
             this.tcBookings.SuspendLayout();
             this.tpAdd.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDatesNext)).BeginInit();
@@ -68,6 +72,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvEditBookings)).BeginInit();
             this.tpRemove.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgDeleteBookings)).BeginInit();
+            this.tabPage1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tcBookings
@@ -75,6 +81,7 @@
             this.tcBookings.Controls.Add(this.tpAdd);
             this.tcBookings.Controls.Add(this.tpEdit);
             this.tcBookings.Controls.Add(this.tpRemove);
+            this.tcBookings.Controls.Add(this.tabPage1);
             this.tcBookings.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tcBookings.Location = new System.Drawing.Point(12, 35);
             this.tcBookings.Name = "tcBookings";
@@ -338,15 +345,19 @@
             this.tpRemove.Text = "Remove";
             this.tpRemove.UseVisualStyleBackColor = true;
             // 
-            // lblBookingsHeader
+            // btnDeleteBooking
             // 
-            this.lblBookingsHeader.AutoSize = true;
-            this.lblBookingsHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBookingsHeader.Location = new System.Drawing.Point(13, 9);
-            this.lblBookingsHeader.Name = "lblBookingsHeader";
-            this.lblBookingsHeader.Size = new System.Drawing.Size(96, 24);
-            this.lblBookingsHeader.TabIndex = 1;
-            this.lblBookingsHeader.Text = "Bookings";
+            this.btnDeleteBooking.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(54)))), ((int)(((byte)(22)))));
+            this.btnDeleteBooking.FlatAppearance.BorderSize = 0;
+            this.btnDeleteBooking.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDeleteBooking.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
+            this.btnDeleteBooking.Location = new System.Drawing.Point(845, 545);
+            this.btnDeleteBooking.Name = "btnDeleteBooking";
+            this.btnDeleteBooking.Size = new System.Drawing.Size(168, 30);
+            this.btnDeleteBooking.TabIndex = 18;
+            this.btnDeleteBooking.Text = "Delete Booking";
+            this.btnDeleteBooking.UseVisualStyleBackColor = false;
+            this.btnDeleteBooking.Click += new System.EventHandler(this.BtnDeleteBooking_Click);
             // 
             // dgDeleteBookings
             // 
@@ -379,19 +390,60 @@
             this.dgDeleteBookings.Size = new System.Drawing.Size(1010, 536);
             this.dgDeleteBookings.TabIndex = 17;
             // 
-            // btnDeleteBooking
+            // tabPage1
             // 
-            this.btnDeleteBooking.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(54)))), ((int)(((byte)(22)))));
-            this.btnDeleteBooking.FlatAppearance.BorderSize = 0;
-            this.btnDeleteBooking.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDeleteBooking.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
-            this.btnDeleteBooking.Location = new System.Drawing.Point(845, 545);
-            this.btnDeleteBooking.Name = "btnDeleteBooking";
-            this.btnDeleteBooking.Size = new System.Drawing.Size(168, 30);
-            this.btnDeleteBooking.TabIndex = 18;
-            this.btnDeleteBooking.Text = "Delete Booking";
-            this.btnDeleteBooking.UseVisualStyleBackColor = false;
-            this.btnDeleteBooking.Click += new System.EventHandler(this.BtnDeleteBooking_Click);
+            this.tabPage1.Controls.Add(this.btnAllBookings);
+            this.tabPage1.Controls.Add(this.panel1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 29);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1022, 581);
+            this.tabPage1.TabIndex = 3;
+            this.tabPage1.Text = "Reports";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // btnAllBookings
+            // 
+            this.btnAllBookings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(126)))), ((int)(((byte)(176)))));
+            this.btnAllBookings.FlatAppearance.BorderSize = 0;
+            this.btnAllBookings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAllBookings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
+            this.btnAllBookings.Location = new System.Drawing.Point(3, 6);
+            this.btnAllBookings.Name = "btnAllBookings";
+            this.btnAllBookings.Size = new System.Drawing.Size(163, 30);
+            this.btnAllBookings.TabIndex = 22;
+            this.btnAllBookings.Text = "All Bookings";
+            this.btnAllBookings.UseVisualStyleBackColor = false;
+            this.btnAllBookings.Click += new System.EventHandler(this.btnAllBookings_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.crvReports);
+            this.panel1.Location = new System.Drawing.Point(172, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(847, 575);
+            this.panel1.TabIndex = 21;
+            // 
+            // crvReports
+            // 
+            this.crvReports.ActiveViewIndex = -1;
+            this.crvReports.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.crvReports.Cursor = System.Windows.Forms.Cursors.Default;
+            this.crvReports.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.crvReports.Location = new System.Drawing.Point(0, 0);
+            this.crvReports.Name = "crvReports";
+            this.crvReports.Size = new System.Drawing.Size(847, 575);
+            this.crvReports.TabIndex = 0;
+            // 
+            // lblBookingsHeader
+            // 
+            this.lblBookingsHeader.AutoSize = true;
+            this.lblBookingsHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBookingsHeader.Location = new System.Drawing.Point(13, 9);
+            this.lblBookingsHeader.Name = "lblBookingsHeader";
+            this.lblBookingsHeader.Size = new System.Drawing.Size(96, 24);
+            this.lblBookingsHeader.TabIndex = 1;
+            this.lblBookingsHeader.Text = "Bookings";
             // 
             // frmBookings
             // 
@@ -414,6 +466,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvEditBookings)).EndInit();
             this.tpRemove.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgDeleteBookings)).EndInit();
+            this.tabPage1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -445,5 +499,9 @@
         private System.Windows.Forms.Button btnEditBooking;
         private System.Windows.Forms.DataGridView dgDeleteBookings;
         private System.Windows.Forms.Button btnDeleteBooking;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.Button btnAllBookings;
+        private System.Windows.Forms.Panel panel1;
+        private CrystalDecisions.Windows.Forms.CrystalReportViewer crvReports;
     }
 }

@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CrystalDecisions.CrystalReports.Engine;
 
 namespace Studio76.Forms
 {
@@ -635,6 +636,15 @@ namespace Studio76.Forms
             }
 
             SetupBookingTable();
+        }
+
+        private void btnAllBookings_Click(object sender, EventArgs e)
+        {
+            ReportDocument report = new ReportDocument();
+            report.Load(@"C:\Users\gal16100778\source\repos\Studio76\Studio76\Reports\AllBookings.rpt");
+
+            crvReports.ReportSource = report;
+            crvReports.Refresh();
         }
 
         private void CboAddBookingArtistType_SelectedIndexChanged(object sender, EventArgs e)
