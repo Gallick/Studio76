@@ -12,9 +12,9 @@ namespace Studio76.Classes
         public TimeSpan StartTime;
         public int BookingLength;
         public string BookingDate;
-        public Artist ArtistDetails;
+        public Artists ArtistDetails;
 
-        public SelectionBooking(string _booked, TimeSpan _start, int _length, string _date, Artist _a)
+        public SelectionBooking(string _booked, TimeSpan _start, int _length, string _date, Artists _a)
         {
             BookedDate = _booked;
             StartTime = _start;
@@ -24,13 +24,13 @@ namespace Studio76.Classes
         }
     }
 
-    public class Artist
+    public class Artists
     {
         public int ArtistID;
         public string ArtistName;
         public float Price;
 
-        public Artist(int _id, string _name, float _hourly)
+        public Artists(int _id, string _name, float _hourly)
         {
             ArtistID = _id;
             Price = _hourly;

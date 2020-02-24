@@ -218,14 +218,21 @@ namespace Studio76.Forms
             {
                 try
                 {
-                    SqlCommand getCount = new SqlCommand("SELECT COUNT(*) FROM Customer", conn);
+                    SqlCommand getCount = new SqlCommand("SELECT CustomerID FROM Customer", conn);
                     conn.Open();
 
-                    string countReader = getCount.ExecuteScalar().ToString();
+                    SqlDataReader countReader = getCount.ExecuteReader();
+
+                    int id = -1;
+
+                    while(countReader.Read())
+                    {
+                        id = Int32.Parse(countReader[0].ToString());
+                    }
                     conn.Close();
 
                     //Assign Booking Variables
-                    customerID = 1000 + Int32.Parse(countReader);
+                    customerID = id;
                 }
                 catch(Exception ex)
                 {

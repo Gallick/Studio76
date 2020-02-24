@@ -73,7 +73,7 @@ namespace Studio76.Forms
                 SelectionBooking s = new SelectionBooking(DateTime.Now.ToShortDateString(),
                     BookingStartTime(), selectedTimeSlots.Count,
                     GetDateFromBookings(selectedTimeSlots[0]), 
-                    new Artist(artistID, GetArtistName(artistID), GetArtistHourlyPrice(artistID)));
+                    new Artists(artistID, GetArtistName(artistID), GetArtistHourlyPrice(artistID)));
 
                
                 masterForm.ClearCurrentForm();
@@ -439,7 +439,7 @@ namespace Studio76.Forms
         { 
             BookingDetails bd = new BookingDetails();
 
-            sqlBookingDetails = @"SELECT * FROM BookingDetails WHERE BookingID = '" + _bookingID + "'";
+            sqlBookingDetails = @"SELECT * FROM BookingDetails WHERE BookingID = '" + _bookingID + "' AND SessionDate >= getdate()";
             daBookingDetails = new SqlDataAdapter(sqlBookingDetails, connectionString);
             daBookingDetails.FillSchema(dsStudio, SchemaType.Source, "BookingDetails");
             daBookingDetails.Fill(dsStudio, "BookingDetails");
@@ -677,14 +677,18 @@ namespace Studio76.Forms
 
             foreach (DataRow dr in dsStudio.Tables["AllBookings"].Rows)
             {
-                Booking b = new Booking();
-                b.BookingID = Int32.Parse(dr["BookingID"].ToString());
-                b.ArtistID = Int32.Parse(dr["ArtistID"].ToString());
-                b.CustomerID = Int32.Parse(dr["CustomerID"].ToString());
-                b.DateBooked = dr["DateBooked"].ToString().Split(' ')[0];
+                BookingDetails bd = GetBookingDetails(Int32.Parse(dr["BookingID"].ToString()));
+                if (bd != null)
+                {
+                    Booking b = new Booking();
+                    b.BookingID = Int32.Parse(dr["BookingID"].ToString());
+                    b.ArtistID = Int32.Parse(dr["ArtistID"].ToString());
+                    b.CustomerID = Int32.Parse(dr["CustomerID"].ToString());
+                    b.DateBooked = dr["DateBooked"].ToString().Split(' ')[0];
 
-                b.bookingDetails = GetBookingDetails(b.BookingID);
-                allBookings.Add(b);
+                    b.bookingDetails = GetBookingDetails(b.BookingID);
+                    allBookings.Add(b);
+                }
             }
 
             UpdateEditBookingTable();

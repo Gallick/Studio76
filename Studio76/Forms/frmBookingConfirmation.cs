@@ -129,14 +129,22 @@ namespace Studio76.Forms
             {
                 try
                 {
-                    SqlCommand getCount = new SqlCommand("SELECT COUNT(*) FROM Booking", conn);
+                    SqlCommand getCount = new SqlCommand("SELECT BookingID FROM Booking", conn);
                     conn.Open();
 
-                    string countReader = getCount.ExecuteScalar().ToString();
+                    SqlDataReader reader = getCount.ExecuteReader();
+
+                    int id = -1;
+
+                    while(reader.Read())
+                    {
+                        id = Int32.Parse(reader[0].ToString());
+                    };
+
                     conn.Close();
 
                     //Assign Booking Variables
-                    int bookingID = 1000 + Int32.Parse(countReader);
+                    int bookingID = id + 1;
                     int customerID = selectedCustomerID;
                     int artistID = currentBooking.ArtistDetails.ArtistID;
                     string dateBooked = DateTime.Now.ToString("yyyy-MM-dd");
@@ -184,7 +192,7 @@ namespace Studio76.Forms
                 }
                 catch(Exception ex)
                 {
-                    MessageBox.Show("There was an error creating the booking!", "Error Creating Booking", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("There was an error creating the booking!\n" + ex.Message, "Error Creating Booking", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

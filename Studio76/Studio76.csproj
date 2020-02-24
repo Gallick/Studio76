@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Artist.cs" />
     <Compile Include="Classes\Booking.cs" />
     <Compile Include="Classes\Customer.cs" />
     <Compile Include="Classes\SelectionBooking.cs" />
@@ -67,6 +68,12 @@
     </Compile>
     <Compile Include="Forms\EditBookingForm.Designer.cs">
       <DependentUpon>EditBookingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmArtists.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmArtists.Designer.cs">
+      <DependentUpon>frmArtists.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmBookingConfirmation.cs">
       <SubType>Form</SubType>
@@ -86,6 +93,12 @@
     <Compile Include="Forms\frmCustomer.Designer.cs">
       <DependentUpon>frmCustomer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmEditArtist.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmEditArtist.Designer.cs">
+      <DependentUpon>frmEditArtist.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmEditCustomer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +113,12 @@
       <DependentUpon>AllBookings.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\CustomerBooking.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CustomerBooking.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Customers.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -112,6 +131,9 @@
     <EmbeddedResource Include="Forms\EditBookingForm.resx">
       <DependentUpon>EditBookingForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmArtists.resx">
+      <DependentUpon>frmArtists.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmBookingConfirmation.resx">
       <DependentUpon>frmBookingConfirmation.cs</DependentUpon>
     </EmbeddedResource>
@@ -120,6 +142,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmCustomer.resx">
       <DependentUpon>frmCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmEditArtist.resx">
+      <DependentUpon>frmEditArtist.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmEditCustomer.resx">
       <DependentUpon>frmEditCustomer.cs</DependentUpon>
@@ -137,6 +162,10 @@
     <EmbeddedResource Include="Reports\AllBookings.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>AllBookings.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CustomerBooking.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CustomerBooking.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Customers.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

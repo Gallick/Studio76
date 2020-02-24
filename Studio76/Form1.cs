@@ -80,5 +80,18 @@ namespace Studio76
         {
             ChangeToCustomerForm();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            ClearCurrentForm();
+
+            frmArtists artist = new frmArtists();
+
+            artist.TopLevel = false;
+            pnlMain.Controls.Add(artist);
+            artist.FormBorderStyle = FormBorderStyle.None;
+            artist.Dock = DockStyle.Fill;
+            artist.Show();
+        }
     }
 }

@@ -63,6 +63,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.crvReports = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
             this.lblBookingsHeader = new System.Windows.Forms.Label();
+            this.btnCustomerBooking = new System.Windows.Forms.Button();
             this.tcBookings.SuspendLayout();
             this.tpAdd.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDatesNext)).BeginInit();
@@ -392,6 +393,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.btnCustomerBooking);
             this.tabPage1.Controls.Add(this.btnAllBookings);
             this.tabPage1.Controls.Add(this.panel1);
             this.tabPage1.Location = new System.Drawing.Point(4, 29);
@@ -408,7 +410,7 @@
             this.btnAllBookings.FlatAppearance.BorderSize = 0;
             this.btnAllBookings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAllBookings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
-            this.btnAllBookings.Location = new System.Drawing.Point(3, 6);
+            this.btnAllBookings.Location = new System.Drawing.Point(3, 42);
             this.btnAllBookings.Name = "btnAllBookings";
             this.btnAllBookings.Size = new System.Drawing.Size(163, 30);
             this.btnAllBookings.TabIndex = 22;
@@ -444,6 +446,19 @@
             this.lblBookingsHeader.Size = new System.Drawing.Size(96, 24);
             this.lblBookingsHeader.TabIndex = 1;
             this.lblBookingsHeader.Text = "Bookings";
+            // 
+            // btnCustomerBooking
+            // 
+            this.btnCustomerBooking.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(126)))), ((int)(((byte)(176)))));
+            this.btnCustomerBooking.FlatAppearance.BorderSize = 0;
+            this.btnCustomerBooking.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCustomerBooking.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
+            this.btnCustomerBooking.Location = new System.Drawing.Point(3, 6);
+            this.btnCustomerBooking.Name = "btnCustomerBooking";
+            this.btnCustomerBooking.Size = new System.Drawing.Size(163, 30);
+            this.btnCustomerBooking.TabIndex = 23;
+            this.btnCustomerBooking.Text = "Customer Booking";
+            this.btnCustomerBooking.UseVisualStyleBackColor = false;
             // 
             // frmBookings
             // 
@@ -503,5 +518,6 @@
         private System.Windows.Forms.Button btnAllBookings;
         private System.Windows.Forms.Panel panel1;
         private CrystalDecisions.Windows.Forms.CrystalReportViewer crvReports;
+        private System.Windows.Forms.Button btnCustomerBooking;
     }
 }
