@@ -20,7 +20,7 @@ namespace Studio76.Forms
 
         private SqlDataAdapter daArtistType;
         private DataSet dsStudio = new DataSet();
-        private string connectionString = @"Data Source=B602-012;Initial Catalog=Studio76;Integrated Security=True";
+        private string connectionString = Helper.connectionString;
 
         public frmEditArtist()
         {

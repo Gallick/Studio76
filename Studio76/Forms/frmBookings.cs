@@ -25,10 +25,7 @@ namespace Studio76.Forms
         private List<Booking> allArtistBookings = new List<Booking>();
 
         //Connections
-        //private string connectionString = @"Data Source=DESKTOP-TAB21TK\SQLEXPRESS;Initial Catalog=Studio76;Integrated Security=True";
-        
-        //Tech
-        private string connectionString = @"Data Source=B602-012;Initial Catalog=Studio76;Integrated Security=True";
+        private string connectionString = Helper.connectionString;
 
         //SQL
         private SqlDataAdapter daBookings, daBookingDetails, daArtistType, daArtists, daEditBookings;

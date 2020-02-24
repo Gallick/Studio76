@@ -15,11 +15,7 @@ namespace Studio76.Forms
 {
     public partial class EditBookingForm : Form
     {
-        //Home
-        //private const string connectionString = @"Data Source=DESKTOP-TAB21TK\SQLEXPRESS;Initial Catalog=Studio76;Integrated Security=True";
-
-        //Tech
-        private string connectionString = @"Data Source=B602-012;Initial Catalog=Studio76;Integrated Security=True";
+        private string connectionString = Helper.connectionString;
 
         public frmBookings Master;
         public Booking currentBooking;
@@ -211,11 +207,11 @@ namespace Studio76.Forms
                             MessageBox.Show("Booking Successfully Edited", "Booking Edited", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                             Master.GetBoookingInformation();
-                            this.Close();
-
                             Master.GetAllBookings();
                             Master.UpdateDeleteBookingForm();
                             Master.UpdateEditBookingTable();
+                            this.Close();
+
                         }
                     }
                     catch(Exception ex)

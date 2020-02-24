@@ -15,7 +15,7 @@ namespace Studio76.Forms
 {
     public partial class frmArtists : Form
     {
-        private string connectionString = @"Data Source=B602-012;Initial Catalog=Studio76;Integrated Security=True";
+        private string connectionString = Helper.connectionString;
         private SqlDataAdapter daArtistType, daArtist;
         private DataSet dsStudio = new DataSet();
 
