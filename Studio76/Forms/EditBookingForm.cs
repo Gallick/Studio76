@@ -61,6 +61,8 @@ namespace Studio76.Forms
             txtBookingLength.Text = currentBooking.bookingDetails.BookingLength.ToString();
 
             lblStartTime.Text = GetStartTime();
+
+            cboEditBookingArtist.Text = currentBooking.ArtistName;
         }
 
         private string GetStartTime()
@@ -186,6 +188,10 @@ namespace Studio76.Forms
                 {
                     MessageBox.Show("Booking Length must be more than 0", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                else if(dtDate.Value.Day == 1)
+                {                
+                    MessageBox.Show("Bookings cannot be made for a Sunday, please selected anther date and try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 else
                 {
                     //Update Booking
@@ -206,6 +212,10 @@ namespace Studio76.Forms
 
                             Master.GetBoookingInformation();
                             this.Close();
+
+                            Master.GetAllBookings();
+                            Master.UpdateDeleteBookingForm();
+                            Master.UpdateEditBookingTable();
                         }
                     }
                     catch(Exception ex)
@@ -268,7 +278,6 @@ namespace Studio76.Forms
 
                 lblPhoneNoDetails.Text = dr["TelNo"].ToString();
                 lblEmailDetails.Text = dr["Email"].ToString();
-
             }
         }
     }

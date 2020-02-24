@@ -58,11 +58,16 @@ namespace Studio76.Forms
 
             UpdateArtistSelection();
             UpdateDeleteBookingForm();
+
+            GetBoookingInformation();
         }
 
         #region Add Booking
 
-        private void frmBookings_Load(object sender, EventArgs e) => GetBoookingInformation();
+        private void frmBookings_Load(object sender, EventArgs e)
+        {
+
+        }
 
         private void btnConfirmDates_Click(object sender, EventArgs e)
         {
@@ -555,7 +560,7 @@ namespace Studio76.Forms
 
         private void BtnDeleteBooking_Click(object sender, EventArgs e)
         {
-            if(dgvEditBookings.SelectedRows.Count > 0)
+            if(dgDeleteBookings.SelectedRows.Count > 0)
             {
                 try
                 {
@@ -664,7 +669,7 @@ namespace Studio76.Forms
             }
         }
         
-       private void GetAllBookings()
+        public void GetAllBookings()
         {
             allBookings.Clear();
 
@@ -693,8 +698,9 @@ namespace Studio76.Forms
 
             UpdateEditBookingTable();
         }
-        private void UpdateEditBookingTable()
+        public void UpdateEditBookingTable()
         {
+            dgvEditBookings.DataSource = null;
             dgvEditBookings.DataSource = allBookings.Select(Booking => new {
                 Booking.BookingID,
                 Booking.CustomerName,
@@ -728,8 +734,9 @@ namespace Studio76.Forms
         #endregion
 
         #region Delete Booking
-        private void UpdateDeleteBookingForm()
+        public void UpdateDeleteBookingForm()
         {
+            dgDeleteBookings.DataSource = null;
             dgDeleteBookings.DataSource = allBookings.Select(Booking => new {
                 Booking.BookingID,
                 Booking.CustomerName,
