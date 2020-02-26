@@ -58,7 +58,6 @@ namespace Studio76.Forms
 
                 while(reader.Read())
                 {
-                    selectedCustomerID = reader.GetInt32(0);
                     col.Add(reader.GetString(1));
                 }
 
@@ -229,6 +228,8 @@ namespace Studio76.Forms
 
                 lblPhoneNoDetails.Text = dr["TelNo"].ToString();
                 lblEmailDetails.Text = dr["Email"].ToString();
+
+                selectedCustomerID = Int32.Parse(dr["CustomerID"].ToString());
 
             }
         }
