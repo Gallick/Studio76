@@ -229,7 +229,7 @@ namespace Studio76.Forms
                     conn.Close();
 
                     //Assign Booking Variables
-                    customerID = id;
+                    customerID = id + 1;
                 }
                 catch(Exception ex)
                 {

@@ -63,7 +63,7 @@ namespace Studio76.Forms
 
         private void frmBookings_Load(object sender, EventArgs e)
         {
-
+            GetBoookingInformation();         
         }
 
         private void btnConfirmDates_Click(object sender, EventArgs e)
@@ -72,10 +72,40 @@ namespace Studio76.Forms
             {
                 int artistID = Int32.Parse(cboAddBookingArtist.SelectedValue.ToString());
 
-                SelectionBooking s = new SelectionBooking(DateTime.Now.ToShortDateString(),
-                    BookingStartTime(), selectedTimeSlots.Count,
-                    GetDateFromBookings(selectedTimeSlots[0]), 
-                    new Artists(artistID, GetArtistName(artistID), GetArtistHourlyPrice(artistID)));
+                string now = DateTime.Now.ToShortDateString();
+                List<string> days = GetBookedDays();
+                List<TimeSpan> bookingStartTimes = BookingStartTime();
+
+                int[] dayLengths = new int[days.Count];
+
+              
+                foreach (string item in days)
+                {
+                    foreach (DataGridViewCell cell in selectedTimeSlots)
+                    {
+                        string day = dgAddBookingSelectDate.Columns[cell.ColumnIndex].HeaderText.Split('\n')[1].ToString();
+
+                        if (day == item)
+                        {
+                            int index = days.IndexOf(item);
+                            dayLengths[index] += 1;
+                        }
+                    }
+                }
+
+                List<MultiBook> daysBooked = new List<MultiBook>();
+
+
+                for (int i = 0; i < days.Count; i++)
+                {
+                    MultiBook mb = new MultiBook();
+                    mb.StartTime = bookingStartTimes[i];
+                    mb.Length = dayLengths[i];
+                    mb.Date = days[i];
+                    daysBooked.Add(mb);
+                }
+
+                SelectionBooking s = new SelectionBooking(now, daysBooked, new Artists(artistID, GetArtistName(artistID), GetArtistHourlyPrice(artistID)));
 
                
                 masterForm.ClearCurrentForm();
@@ -88,24 +118,76 @@ namespace Studio76.Forms
             }
         }
 
-        private TimeSpan BookingStartTime()
+        private List<TimeSpan> BookingStartTime()
         {
             List<TimeSpan> times = new List<TimeSpan>();
+            List<string> days = new List<string>();
 
-            for (int i = 0; i < selectedTimeSlots.Count; i++)
+            foreach (DataGridViewCell cell in selectedTimeSlots)
             {
-                TimeSpan t = TimeSpan.Parse(selectedTimeSlots[0].Value.ToString());
-                times.Add(t);
+                int column = cell.ColumnIndex;
+
+                string header = dgAddBookingSelectDate.Columns[column].HeaderText.Split('\n')[1];
+
+                if (days.Contains(header) == false)
+                {
+                    days.Add(header);
+                }
             }
 
-            return times.Min();
+
+            foreach (var item in days)
+            {
+                List<TimeSpan> dayTimes = new List<TimeSpan>();
+                foreach (DataGridViewCell cell in selectedTimeSlots)
+                {
+                    int column = cell.ColumnIndex;
+                    string columnText = dgAddBookingSelectDate.Columns[column].HeaderText.Split('\n')[1];
+
+                    //Same Day
+                    if (item == columnText)
+                    {
+                        dayTimes.Add((TimeSpan.Parse(cell.Value.ToString())));
+                    }
+                }
+
+                times.Add(dayTimes.Min());
+            }
+  
+            
+
+            return times;
             
         }
 
-        private string GetDateFromBookings(DataGridViewCell _cell)
+        private List<string> GetBookedDays()
         {
-            int colIndex = _cell.ColumnIndex;
-            string columnHeader = dgAddBookingSelectDate.Columns[colIndex].HeaderText;
+            List<string> days = new List<string>();
+
+            foreach (DataGridViewCell cell in selectedTimeSlots)
+            {
+                int column = cell.ColumnIndex;
+
+                string header = dgAddBookingSelectDate.Columns[column].HeaderText.Split('\n')[1];
+
+                if (days.Contains(header) == false)
+                    days.Add(header);
+            }
+
+            return days;
+        }
+
+        private List<string> GetDateFromBookings(List<DataGridViewCell> Cell)
+        {
+            List<string> columnHeader = new List<string>();
+            foreach (DataGridViewCell _cell in Cell)
+            {
+                int colIndex = _cell.ColumnIndex;
+                string header = dgAddBookingSelectDate.Columns[colIndex].HeaderText;
+
+                if (columnHeader.Contains(header) == false)
+                    columnHeader.Add(header);
+            }
 
             return columnHeader;
         }
@@ -164,14 +246,6 @@ namespace Studio76.Forms
                         {
                             bool canSelect = true;
 
-                            foreach (DataGridViewCell item in selectedTimeSlots)
-                            {
-                                if (dgAddBookingSelectDate.CurrentCell.ColumnIndex != item.ColumnIndex)
-                                {
-                                    canSelect = false;
-                                }
-                            }
-
                             if (canSelect)
                             {
                                 Color selectedColorBack = System.Drawing.ColorTranslator.FromHtml("#487eb0");
@@ -192,7 +266,8 @@ namespace Studio76.Forms
                 }
                 else
                 {
-                    MessageBox.Show("The Artist already has a booking for this time slot, please choose another!", "Cannot Select Time Slot", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if(e.Button != MouseButtons.Right)
+                        MessageBox.Show("The Artist already has a booking for this time slot, please choose another!", "Cannot Select Time Slot", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -437,9 +512,9 @@ namespace Studio76.Forms
             return forename + " " + surname;
         }
 
-        private BookingDetails GetBookingDetails(int _bookingID)
-        { 
-            BookingDetails bd = new BookingDetails();
+        private List<BookingDetails> GetBookingDetails(int _bookingID)
+        {
+            List<BookingDetails> bd = new List<BookingDetails>();
 
             sqlBookingDetails = @"SELECT * FROM BookingDetails WHERE BookingID = '" + _bookingID + "' AND SessionDate >= getdate()";
             daBookingDetails = new SqlDataAdapter(sqlBookingDetails, connectionString);
@@ -448,13 +523,14 @@ namespace Studio76.Forms
 
             foreach (DataRow dr in dsStudio.Tables["BookingDetails"].Rows)
             {
-                bd.BookingID = Int32.Parse(dr["BookingID"].ToString());
-                bd.Time = TimeSpan.Parse(dr["SessionTime"].ToString());
-                bd.BookingLength = Int32.Parse(dr["SessionLength"].ToString());
-                bd.BookingDate = dr["SessionDate"].ToString().Split(' ')[0];
+                BookingDetails b = new BookingDetails();
+                b.BookingID = Int32.Parse(dr["BookingID"].ToString());
+                b.Time = TimeSpan.Parse(dr["SessionTime"].ToString());
+                b.BookingLength = Int32.Parse(dr["SessionLength"].ToString());
+                b.BookingDate = dr["SessionDate"].ToString().Split(' ')[0];
 
+                bd.Add(b);
             }
-
             return bd;
 
         }
@@ -467,23 +543,31 @@ namespace Studio76.Forms
             {
                 foreach (DataGridViewColumn column in dgAddBookingSelectDate.Columns)
                 {
-                    if (column.HeaderText.Contains(item.bookingDetails.BookingDate))
+                    foreach (var bd in item.bookingDetails)
                     {
-                        int id = dgAddBookingSelectDate.Columns.IndexOf(column);
-                        for (int i = 0; i < 17; i++)
+                        if (bd.BookingDate != null && column.HeaderText.Contains(bd.BookingDate))
                         {
-                            string cell = dgAddBookingSelectDate[id, i].Value.ToString();
-                            if (cell.Contains(item.bookingDetails.Time.ToString()))
+                            int id = dgAddBookingSelectDate.Columns.IndexOf(column);
+                            for (int i = 0; i < 17; i++)
                             {
-                                for (int x = 0; x < item.bookingDetails.BookingLength; x++)
+                                string cell = dgAddBookingSelectDate[id, i].Value.ToString();
+                                if (cell.Contains(bd.Time.ToString()))
                                 {
-                                    dgAddBookingSelectDate[id, i + x].Style.BackColor = Color.Green;
-                                    dgAddBookingSelectDate[id, i + x].Style.ForeColor = Color.Black;
-                                    dgAddBookingSelectDate[id, i + x].Value = "";
+                                    for (int x = 0; x < bd.BookingLength; x++)
+                                    {
+                                        ContextMenu cm = new ContextMenu();
+                                        cm.MenuItems.Add(new MenuItem("Edit"));
+
+
+                                        dgAddBookingSelectDate[id, i + x].ToolTipText = item.CustomerName + "\n" + item.BookingID;
+                                        dgAddBookingSelectDate[id, i + x].Style.BackColor = Color.Green;
+                                        dgAddBookingSelectDate[id, i + x].Style.ForeColor = Color.Black;
+                                        dgAddBookingSelectDate[id, i + x].Value = "";
+                                    }
                                 }
                             }
                         }
-                    }             
+                    }                  
                 }
             }
         }
@@ -649,6 +733,123 @@ namespace Studio76.Forms
             crvReports.Refresh();
         }
 
+        private void dgAddBookingSelectDate_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenu cm = new ContextMenu();
+                MenuItem edit = new MenuItem("Edit");
+                MenuItem delete = new MenuItem("Delete");
+                cm.MenuItems.Add(edit);
+                cm.MenuItems.Add(delete);
+
+                DataGridView.HitTestInfo hitInfo;
+                hitInfo = dgAddBookingSelectDate.HitTest(e.X, e.Y);
+
+                string id = "";
+
+                //Booked Cell
+                if (dgAddBookingSelectDate[hitInfo.ColumnIndex, hitInfo.RowIndex].Style.BackColor == Color.Green)
+                {
+                    string txt = dgAddBookingSelectDate[hitInfo.ColumnIndex, hitInfo.RowIndex].ToolTipText;
+                    id = txt.Split('\n')[1];
+                    cm.Show(dgAddBookingSelectDate, new Point(e.X, e.Y));
+                }
+
+                edit.Click += ((object s, EventArgs a) => {
+                    if (!isEditOpen)
+                    {
+                        Booking b = null;
+
+                        foreach (Booking booking in allBookings)
+                        {
+                            if(booking.BookingID.ToString() == id)
+                            {
+                                b = booking;
+                            }
+                        }
+                        if (b != null)
+                        {
+                            EditBookingForm eb = new EditBookingForm();
+                            eb.Master = this;
+                            eb.currentBooking = b;
+                            eb.Show();
+
+                            isEditOpen = true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Could not get the id of the booking!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Edit Booking form is already open, please close it and try again!", "Form Open", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                });
+                delete.Click += ((object s, EventArgs a) => {
+                    DeleteBooking(id);
+                });
+            }
+        }
+
+        private void DeleteBooking(string id)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    Booking b = null;
+                    foreach (var item in allBookings)
+                    {
+                        if (item.BookingID.ToString() == id)
+                        {
+                            b = item;
+                        }
+                    }
+                    if (b != null)
+                    {
+                        string sql = @"DELETE FROM BookingDetails WHERE BookingID = '" + b.BookingID + "'; DELETE FROM Booking WHERE BookingID = '" + b.BookingID + "';";
+                        SqlCommand cmd = new SqlCommand(sql, conn);
+                        conn.Open();
+
+                        cmd.ExecuteNonQuery();
+
+                        conn.Close();
+
+                        int _id = 0;
+
+                        foreach (Booking booking in allBookings)
+                        {
+                            if (booking.BookingID == b.BookingID)
+                            {
+                                _id = allBookings.IndexOf(booking);
+                            }
+                        }
+
+                        allBookings.RemoveAt(_id);
+
+                        UpdateDeleteBookingForm();
+                        UpdateEditBookingTable();
+
+                        dgDeleteBookings.Update();
+                        dgvEditBookings.Update();
+
+                        GetBoookingInformation();
+
+                        MessageBox.Show("Booking Successfully Deleted", "Booking Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error Getting Selected Booking, Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error Deleting Booking!\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         private void CboAddBookingArtistType_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateArtistSelection();
@@ -679,8 +880,8 @@ namespace Studio76.Forms
 
             foreach (DataRow dr in dsStudio.Tables["AllBookings"].Rows)
             {
-                BookingDetails bd = GetBookingDetails(Int32.Parse(dr["BookingID"].ToString()));
-                if (bd != null)
+                List<BookingDetails> bd = GetBookingDetails(Int32.Parse(dr["BookingID"].ToString()));
+                if (bd != null || bd.Count != 0)
                 {
                     Booking b = new Booking();
                     b.BookingID = Int32.Parse(dr["BookingID"].ToString());
@@ -702,10 +903,10 @@ namespace Studio76.Forms
                 Booking.BookingID,
                 Booking.CustomerName,
                 Booking.ArtistName,
-                Booking.bookingDetails.BookingDate,
-                Booking.bookingDetails.Time,
+                Booking.bookingDetails[0].BookingDate,
+                Booking.bookingDetails[0].Time,
                 Booking.BookingLengthTime,
-                Booking.bookingDetails.DepositPaid
+                Booking.bookingDetails[0].DepositPaid
             }).ToList();
 
         }
@@ -738,10 +939,10 @@ namespace Studio76.Forms
                 Booking.BookingID,
                 Booking.CustomerName,
                 Booking.ArtistName,
-                Booking.bookingDetails.BookingDate,
-                Booking.bookingDetails.Time,
+                Booking.bookingDetails[0].BookingDate,
+                Booking.bookingDetails[0].Time,
                 Booking.BookingLengthTime,
-                Booking.bookingDetails.DepositPaid
+                Booking.bookingDetails[0].DepositPaid
             }).ToList();
 
         }

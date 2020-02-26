@@ -49,7 +49,6 @@
             this.cbFriday = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cbSaturday = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cbSunday = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnAddBookingFindDate = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.cboAddBookingArtist = new System.Windows.Forms.ComboBox();
             this.tpEdit = new System.Windows.Forms.TabPage();
@@ -59,11 +58,11 @@
             this.btnDeleteBooking = new System.Windows.Forms.Button();
             this.dgDeleteBookings = new System.Windows.Forms.DataGridView();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnCustomerBooking = new System.Windows.Forms.Button();
             this.btnAllBookings = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.crvReports = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
             this.lblBookingsHeader = new System.Windows.Forms.Label();
-            this.btnCustomerBooking = new System.Windows.Forms.Button();
             this.tcBookings.SuspendLayout();
             this.tpAdd.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDatesNext)).BeginInit();
@@ -98,7 +97,6 @@
             this.tpAdd.Controls.Add(this.pbDatesPervious);
             this.tpAdd.Controls.Add(this.lblCurrentDates);
             this.tpAdd.Controls.Add(this.dgAddBookingSelectDate);
-            this.tpAdd.Controls.Add(this.btnAddBookingFindDate);
             this.tpAdd.Controls.Add(this.label2);
             this.tpAdd.Controls.Add(this.cboAddBookingArtist);
             this.tpAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -200,6 +198,7 @@
             this.dgAddBookingSelectDate.Size = new System.Drawing.Size(832, 509);
             this.dgAddBookingSelectDate.TabIndex = 12;
             this.dgAddBookingSelectDate.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgAddBookingSelectDate_CellMouseClick);
+            this.dgAddBookingSelectDate.MouseUp += new System.Windows.Forms.MouseEventHandler(this.dgAddBookingSelectDate_MouseUp);
             // 
             // cbMonday
             // 
@@ -242,20 +241,6 @@
             this.cbSunday.HeaderText = "Sunday";
             this.cbSunday.Name = "cbSunday";
             this.cbSunday.ReadOnly = true;
-            // 
-            // btnAddBookingFindDate
-            // 
-            this.btnAddBookingFindDate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(54)))), ((int)(((byte)(64)))));
-            this.btnAddBookingFindDate.FlatAppearance.BorderSize = 0;
-            this.btnAddBookingFindDate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddBookingFindDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
-            this.btnAddBookingFindDate.Location = new System.Drawing.Point(10, 92);
-            this.btnAddBookingFindDate.Name = "btnAddBookingFindDate";
-            this.btnAddBookingFindDate.Size = new System.Drawing.Size(168, 30);
-            this.btnAddBookingFindDate.TabIndex = 11;
-            this.btnAddBookingFindDate.Text = "Get Date";
-            this.btnAddBookingFindDate.UseVisualStyleBackColor = false;
-            this.btnAddBookingFindDate.Click += new System.EventHandler(this.BtnAddBookingFindDate_Click);
             // 
             // label2
             // 
@@ -404,6 +389,19 @@
             this.tabPage1.Text = "Reports";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // btnCustomerBooking
+            // 
+            this.btnCustomerBooking.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(126)))), ((int)(((byte)(176)))));
+            this.btnCustomerBooking.FlatAppearance.BorderSize = 0;
+            this.btnCustomerBooking.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCustomerBooking.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
+            this.btnCustomerBooking.Location = new System.Drawing.Point(3, 6);
+            this.btnCustomerBooking.Name = "btnCustomerBooking";
+            this.btnCustomerBooking.Size = new System.Drawing.Size(163, 30);
+            this.btnCustomerBooking.TabIndex = 23;
+            this.btnCustomerBooking.Text = "Customer Booking";
+            this.btnCustomerBooking.UseVisualStyleBackColor = false;
+            // 
             // btnAllBookings
             // 
             this.btnAllBookings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(126)))), ((int)(((byte)(176)))));
@@ -447,19 +445,6 @@
             this.lblBookingsHeader.TabIndex = 1;
             this.lblBookingsHeader.Text = "Bookings";
             // 
-            // btnCustomerBooking
-            // 
-            this.btnCustomerBooking.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(126)))), ((int)(((byte)(176)))));
-            this.btnCustomerBooking.FlatAppearance.BorderSize = 0;
-            this.btnCustomerBooking.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCustomerBooking.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(246)))), ((int)(((byte)(250)))));
-            this.btnCustomerBooking.Location = new System.Drawing.Point(3, 6);
-            this.btnCustomerBooking.Name = "btnCustomerBooking";
-            this.btnCustomerBooking.Size = new System.Drawing.Size(163, 30);
-            this.btnCustomerBooking.TabIndex = 23;
-            this.btnCustomerBooking.Text = "Customer Booking";
-            this.btnCustomerBooking.UseVisualStyleBackColor = false;
-            // 
             // frmBookings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -495,7 +480,6 @@
         private System.Windows.Forms.TabPage tpEdit;
         private System.Windows.Forms.TabPage tpRemove;
         private System.Windows.Forms.Label lblBookingsHeader;
-        private System.Windows.Forms.Button btnAddBookingFindDate;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cboAddBookingArtist;
         private System.Windows.Forms.DataGridView dgAddBookingSelectDate;

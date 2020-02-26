@@ -13,10 +13,10 @@ namespace Studio76.Classes
 
 
         public int BookingID { get; set; }
-        public BookingDetails bookingDetails { get; set; }
+        public List<BookingDetails> bookingDetails{ get; set; }
         public int DetailsID {
 
-            get { return bookingDetails.BookingID; }
+            get { return bookingDetails[0].BookingID; }
             protected set { DetailsID = value; }
         }
         public int CustomerID { get; set; }
@@ -50,7 +50,7 @@ namespace Studio76.Classes
 
         public Booking() { }
 
-        public Booking(int _id, BookingDetails _details, int _customerID, int _artistiD, string _dateBooked)
+        public Booking(int _id, List<BookingDetails> _details, int _customerID, int _artistiD, string _dateBooked)
         {
             BookingID = _id;
             bookingDetails = _details;
@@ -107,8 +107,12 @@ namespace Studio76.Classes
 
         private string GetBookingLengthTime()
         {
-            int length = bookingDetails.BookingLength;
-            
+            int length = 0;
+            for (int i = 0; i < length; i++)
+            {
+                length += bookingDetails[i].BookingLength;
+            }
+
             float hours = (float.Parse(length.ToString()) / 2);
 
             return "" + hours.ToString("F1") + " Hours";

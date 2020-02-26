@@ -9,17 +9,13 @@ namespace Studio76.Classes
     public class SelectionBooking
     {
         public string BookedDate;
-        public TimeSpan StartTime;
-        public int BookingLength;
-        public string BookingDate;
+        public List<MultiBook> Multi;
         public Artists ArtistDetails;
 
-        public SelectionBooking(string _booked, TimeSpan _start, int _length, string _date, Artists _a)
+        public SelectionBooking(string _booked, List<MultiBook> _multi, Artists _a)
         {
             BookedDate = _booked;
-            StartTime = _start;
-            BookingLength = _length;
-            BookingDate = _date;
+            Multi = _multi;
             ArtistDetails = _a;
         }
     }

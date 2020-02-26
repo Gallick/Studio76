@@ -43,7 +43,7 @@ namespace Studio76.Forms
 
             //Setup datetime picker
             dtDate.MinDate = DateTime.Now.AddDays(-1);
-            dtDate.Value = DateTime.ParseExact(currentBooking.bookingDetails.BookingDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+            dtDate.Value = DateTime.ParseExact(currentBooking.bookingDetails[0].BookingDate, "d/M/yyyy", CultureInfo.InvariantCulture);
 
             //Price
             if (String.IsNullOrEmpty(txtBookingLength.Text) == false)
@@ -53,8 +53,8 @@ namespace Studio76.Forms
             }
 
             //Length
-            currentBookingLength = currentBooking.bookingDetails.BookingLength;
-            txtBookingLength.Text = currentBooking.bookingDetails.BookingLength.ToString();
+            currentBookingLength = currentBooking.bookingDetails[0].BookingLength;
+            txtBookingLength.Text = currentBooking.bookingDetails[0].BookingLength.ToString();
 
             lblStartTime.Text = GetStartTime();
 
@@ -63,7 +63,7 @@ namespace Studio76.Forms
 
         private string GetStartTime()
         {
-            string t = currentBooking.bookingDetails.Time.ToString();
+            string t = currentBooking.bookingDetails[0].Time.ToString();
             return t.Substring(0, t.Length - 3);
         }
 

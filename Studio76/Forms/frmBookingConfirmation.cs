@@ -42,7 +42,15 @@ namespace Studio76.Forms
         {
             lblArtistName.Text = currentBooking.ArtistDetails.ArtistName;
             lblPricePerHour.Text = "£" + currentBooking.ArtistDetails.Price.ToString("F2");
-            lblTotalCostResult.Text = "£" + ((float)(currentBooking.BookingLength * currentBooking.ArtistDetails.Price) / 2).ToString("F2");
+
+            int price = 0;
+            foreach (MultiBook item in currentBooking.Multi)
+            {
+                price += item.Length;
+            }
+
+
+            lblTotalCostResult.Text = "£" + ((float)(price * currentBooking.ArtistDetails.Price)/ 2).ToString("F2");
         }
 
         private void CustomerAutoCompleteSetup()
@@ -154,34 +162,34 @@ namespace Studio76.Forms
                     while (bookingReader.Read()) { }
                     conn.Close();
 
-                    //Assign Booking Details Variables
-                    TimeSpan sessionTime = currentBooking.StartTime;
-                    int sessionLength = currentBooking.BookingLength;
 
-                    //Convert date string to correct format
-                    string bookingDate = currentBooking.BookingDate.Split('\n')[1];
-                    bookingDate = bookingDate.Trim();
+                    foreach (var item in currentBooking.Multi)
+                    {
+                        //Assign Booking Details Variables
+                        TimeSpan sessionTime = item.StartTime;
+                        int sessionLength = item.Length;
 
-                    string[] dateParts = bookingDate.Split('/');
+                        string bookingDate = item.Date;
+                        bookingDate = bookingDate.Trim();
 
-                    int day = Int32.Parse(dateParts[0]);
-                    int month = Int32.Parse(dateParts[1]);
-                    int year = Int32.Parse(dateParts[2]);
 
-                    DateTime dt = new DateTime(year, month, day);
 
-                    string finalBooking = dt.ToString("M/d/yyyy");
+                        DateTime dt = DateTime.ParseExact(bookingDate, "d/M/yyyy", CultureInfo.InvariantCulture);
 
-                    //Insert into Booking Details
-                    SqlCommand addBookingDetails = new SqlCommand("INSERT INTO BookingDetails (BookingID, SessionTime, SessionLength, SessionDate) VALUES ('" + bookingID + "', '" +
-                        sessionTime + "','" + sessionLength + "','" + finalBooking + "')", conn);
-                    conn.Open();
+                        string finalBooking = dt.ToString("M/d/yyyy");
 
-                    SqlDataReader bookingDetailsReader = addBookingDetails.ExecuteReader();
-                    while (bookingDetailsReader.Read()) { }
-                    conn.Close();
+                        //Insert into Booking Details
+                        SqlCommand addBookingDetails = new SqlCommand("INSERT INTO BookingDetails (BookingID, SessionTime, SessionLength, SessionDate) VALUES ('" + bookingID + "', '" +
+                            sessionTime + "','" + sessionLength + "','" + finalBooking + "')", conn);
+                        conn.Open();
 
-                    MessageBox.Show("Booking Created for " + bookingDate + " at " + sessionTime + "!", "Booking Created", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        SqlDataReader bookingDetailsReader = addBookingDetails.ExecuteReader();
+                        while (bookingDetailsReader.Read()) { }
+                        conn.Close();
+
+                        MessageBox.Show("Booking Created for " + bookingDate + " at " + sessionTime + "!", "Booking Created", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                   
 
                     this.Close();
                 }
@@ -236,8 +244,19 @@ namespace Studio76.Forms
 
         public void SetupInformation()
         {
-            lblBookingDates.Text = currentBooking.BookingDate.Split('\n')[1];
-            lblBookingLength.Text = ((float)(Int32.Parse(currentBooking.BookingLength.ToString())) / 2).ToString("F1") + " Hour(s)";
+            lblBookingDates.Text = currentBooking.Multi[0].Date;
+            for (int i = 1; i < currentBooking.Multi.Count; i++)
+            {
+                if(lblBookingDates.Text.Contains(currentBooking.Multi[i].Date) == false)
+                    lblBookingDates.Text += " / " + currentBooking.Multi[i].Date;
+            }
+            int length = 0;
+
+            foreach (MultiBook item in currentBooking.Multi)
+            {
+                length += item.Length;
+            }    
+            lblBookingLength.Text = ((float)length / 2).ToString("F1") + " Hour(s)";
 
             lblArtistName.Text = currentBooking.ArtistDetails.ArtistName;            
         }
