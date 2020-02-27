@@ -1,6 +1,5 @@
 ﻿using CrystalDecisions.CrystalReports.Engine;
 using Studio76.Classes;
-using Studio76.Reports;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

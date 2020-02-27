@@ -555,9 +555,6 @@ namespace Studio76.Forms
                                 {
                                     for (int x = 0; x < bd.BookingLength; x++)
                                     {
-                                        ContextMenu cm = new ContextMenu();
-                                        cm.MenuItems.Add(new MenuItem("Edit"));
-
 
                                         dgAddBookingSelectDate[id, i + x].ToolTipText = item.CustomerName + "\n" + item.BookingID;
                                         dgAddBookingSelectDate[id, i + x].Style.BackColor = Color.Green;
@@ -740,8 +737,12 @@ namespace Studio76.Forms
                 ContextMenu cm = new ContextMenu();
                 MenuItem edit = new MenuItem("Edit");
                 MenuItem delete = new MenuItem("Delete");
+                MenuItem recipt = new MenuItem("Generate Recipt");
+
                 cm.MenuItems.Add(edit);
                 cm.MenuItems.Add(delete);
+                cm.MenuItems.Add("-");
+                cm.MenuItems.Add(recipt);
 
                 DataGridView.HitTestInfo hitInfo;
                 hitInfo = dgAddBookingSelectDate.HitTest(e.X, e.Y);
@@ -789,6 +790,10 @@ namespace Studio76.Forms
                 });
                 delete.Click += ((object s, EventArgs a) => {
                     DeleteBooking(id);
+                });
+
+                recipt.Click += ((object s, EventArgs a) => {
+                    Reports.GenerateBookingRecipt(Int32.Parse(id));
                 });
             }
         }

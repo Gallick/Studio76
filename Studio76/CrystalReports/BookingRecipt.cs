@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Studio76.Reports {
+namespace Studio76.CrystalReports {
     using System;
     using System.ComponentModel;
     using CrystalDecisions.Shared;
@@ -16,14 +16,14 @@ namespace Studio76.Reports {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class Customers : ReportClass {
+    public class BookingRecipt : ReportClass {
         
-        public Customers() {
+        public BookingRecipt() {
         }
         
         public override string ResourceName {
             get {
-                return "Customers.rpt";
+                return "BookingRecipt.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace Studio76.Reports {
         
         public override string FullResourceName {
             get {
-                return "Studio76.Reports.Customers.rpt";
+                return "Studio76.CrystalReports.BookingRecipt.rpt";
             }
             set {
                 // Do nothing
@@ -87,12 +87,20 @@ namespace Studio76.Reports {
                 return this.ReportDefinition.Sections[4];
             }
         }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter__bookingID {
+            get {
+                return this.DataDefinition.ParameterFields[0];
+            }
+        }
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedCustomers : Component, ICachedReport {
+    public class CachedBookingRecipt : Component, ICachedReport {
         
-        public CachedCustomers() {
+        public CachedBookingRecipt() {
         }
         
         [Browsable(false)]
@@ -129,7 +137,7 @@ namespace Studio76.Reports {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            Customers rpt = new Customers();
+            BookingRecipt rpt = new BookingRecipt();
             rpt.Site = this.Site;
             return rpt;
         }
