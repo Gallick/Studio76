@@ -12,6 +12,6 @@ namespace Studio76.Classes
         //private string connectionString = @"Data Source=DESKTOP-TAB21TK\SQLEXPRESS;Initial Catalog=Studio76;Integrated Security=True";
 
         //Tech
-        public static string connectionString = @"Data Source=B602-012;Initial Catalog=Studio76;Integrated Security=True";
+        public static string connectionString = @"Data Source=DESKTOP-TAB21TK\SQLEXPRESS;Initial Catalog=Studio76;Integrated Security=True";
     }
 }

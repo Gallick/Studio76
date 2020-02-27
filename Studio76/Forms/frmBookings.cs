@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CrystalDecisions.CrystalReports.Engine;
+using Studio76.CrystalReports;
 
 namespace Studio76.Forms
 {
@@ -723,11 +724,22 @@ namespace Studio76.Forms
 
         private void btnAllBookings_Click(object sender, EventArgs e)
         {
-            ReportDocument report = new ReportDocument();
-            report.Load(@"C:\Users\gal16100778\source\repos\Studio76\Studio76\Reports\AllBookings.rpt");
 
-            crvReports.ReportSource = report;
-            crvReports.Refresh();
+            if (dtStartDate.Value <= dtEndDate.Value)
+            {
+                string start = dtStartDate.Value.ToString("yyyy-M-d");
+                string end = dtEndDate.Value.ToString("yyyy-M-d");
+
+                AllBookings bookings = new AllBookings();
+                bookings.SetParameterValue(0, start);
+                bookings.SetParameterValue(1, end);
+                crvReports.ReportSource = bookings;
+
+            }
+            else
+            {
+                MessageBox.Show("The end date is before the start date, please edit and try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void dgAddBookingSelectDate_MouseUp(object sender, MouseEventArgs e)
@@ -855,6 +867,8 @@ namespace Studio76.Forms
                 MessageBox.Show("Error Deleting Booking!\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+   
+
         private void CboAddBookingArtistType_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateArtistSelection();
@@ -904,16 +918,23 @@ namespace Studio76.Forms
         public void UpdateEditBookingTable()
         {
             dgvEditBookings.DataSource = null;
-            dgvEditBookings.DataSource = allBookings.Select(Booking => new {
-                Booking.BookingID,
-                Booking.CustomerName,
-                Booking.ArtistName,
-                Booking.bookingDetails[0].BookingDate,
-                Booking.bookingDetails[0].Time,
-                Booking.BookingLengthTime,
-                Booking.bookingDetails[0].DepositPaid
-            }).ToList();
+            try
+            {
+                dgvEditBookings.DataSource = allBookings.Select(Booking => new {
+                    Booking.BookingID,
+                    Booking.CustomerName,
+                    Booking.ArtistName,
+                    Booking.bookingDetails[0].BookingDate,
+                    Booking.bookingDetails[0].Time,
+                    Booking.BookingLengthTime,
+                    Booking.bookingDetails[0].DepositPaid
+                }).ToList();
 
+            }
+            catch (Exception ex)
+            { 
+            }
+          
         }
 
         private Booking GetSelectedBooking()
@@ -940,16 +961,22 @@ namespace Studio76.Forms
         public void UpdateDeleteBookingForm()
         {
             dgDeleteBookings.DataSource = null;
-            dgDeleteBookings.DataSource = allBookings.Select(Booking => new {
-                Booking.BookingID,
-                Booking.CustomerName,
-                Booking.ArtistName,
-                Booking.bookingDetails[0].BookingDate,
-                Booking.bookingDetails[0].Time,
-                Booking.BookingLengthTime,
-                Booking.bookingDetails[0].DepositPaid
-            }).ToList();
-
+            try
+            {
+                dgDeleteBookings.DataSource = allBookings.Select(Booking => new {
+                    Booking.BookingID,
+                    Booking.CustomerName,
+                    Booking.ArtistName,
+                    Booking.bookingDetails[0].BookingDate,
+                    Booking.bookingDetails[0].Time,
+                    Booking.BookingLengthTime,
+                    Booking.bookingDetails[0].DepositPaid
+                }).ToList();
+            }
+            catch (Exception ex)
+            {
+            }
+           
         }
 
         private Booking GetSelectedBookingDelete()

@@ -424,15 +424,6 @@ namespace Studio76.Forms
             }
         }
 
-        private void btnAllCustomers_Click(object sender, EventArgs e)
-        {
-            ReportDocument report = new ReportDocument();
-            report.Load(@"C:\Users\gal16100778\source\repos\Studio76\Studio76\Reports\Customers.rpt");
-
-            crvReports.ReportSource = report;
-            crvReports.Refresh();
-        }
-
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
