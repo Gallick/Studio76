@@ -68,6 +68,8 @@
             this.label17 = new System.Windows.Forms.Label();
             this.btnConfirmEdit = new System.Windows.Forms.Button();
             this.lblStartTime = new System.Windows.Forms.Label();
+            this.cboBookingDate = new System.Windows.Forms.ComboBox();
+            this.label23 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label2
@@ -463,11 +465,33 @@
             this.lblStartTime.TabIndex = 71;
             this.lblStartTime.Click += new System.EventHandler(this.Label23_Click);
             // 
+            // cboBookingDate
+            // 
+            this.cboBookingDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboBookingDate.FormattingEnabled = true;
+            this.cboBookingDate.Location = new System.Drawing.Point(267, 43);
+            this.cboBookingDate.Name = "cboBookingDate";
+            this.cboBookingDate.Size = new System.Drawing.Size(206, 26);
+            this.cboBookingDate.TabIndex = 73;
+            this.cboBookingDate.SelectedIndexChanged += new System.EventHandler(this.cboBookingDate_SelectedIndexChanged);
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.label23.Location = new System.Drawing.Point(263, 19);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(106, 20);
+            this.label23.TabIndex = 72;
+            this.label23.Text = "Booking Date";
+            // 
             // EditBookingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(600, 483);
+            this.Controls.Add(this.cboBookingDate);
+            this.Controls.Add(this.label23);
             this.Controls.Add(this.lblStartTime);
             this.Controls.Add(this.btnConfirmEdit);
             this.Controls.Add(this.label17);
@@ -563,5 +587,7 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Button btnConfirmEdit;
         private System.Windows.Forms.Label lblStartTime;
+        private System.Windows.Forms.ComboBox cboBookingDate;
+        private System.Windows.Forms.Label label23;
     }
 }

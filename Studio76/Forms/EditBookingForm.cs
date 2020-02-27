@@ -27,6 +27,8 @@ namespace Studio76.Forms
 
         private int currentBookingLength;
 
+        private List<MultiBook> multiBook = new List<MultiBook>();
+
         public EditBookingForm()
         {
             InitializeComponent();
@@ -35,26 +37,24 @@ namespace Studio76.Forms
         private void EditBookingForm_Load(object sender, EventArgs e)
         {
             GetArtistList();
+            SetupBookingDateCombo();
             GetCustomerList();
             UpdateSelectedCustomerDetails(currentBooking.CustomerID);
 
+            int index = cboBookingDate.SelectedIndex;
             //Set Customer text name
             txtCustomerName.Text = currentBooking.CustomerName;
 
             //Setup datetime picker
             dtDate.MinDate = DateTime.Now.AddDays(-1);
-            dtDate.Value = DateTime.ParseExact(currentBooking.bookingDetails[0].BookingDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+            dtDate.Value = DateTime.ParseExact(multiBook[index].Date, "d/M/yyyy", CultureInfo.InvariantCulture);
 
             //Price
-            if (String.IsNullOrEmpty(txtBookingLength.Text) == false)
-            {
-                currentBookingLength = Int32.Parse(txtBookingLength.Text);
-                UpdatePriceText();
-            }
+            UpdateBookingLengthText();
 
             //Length
-            currentBookingLength = currentBooking.bookingDetails[0].BookingLength;
-            txtBookingLength.Text = currentBooking.bookingDetails[0].BookingLength.ToString();
+
+            UpdateBookingInformation();
 
             lblStartTime.Text = GetStartTime();
 
@@ -147,7 +147,7 @@ namespace Studio76.Forms
 
         private int GetSelectedArtistID()
         {
-            if (cboEditBookingArtist.SelectedValue.GetType() != typeof(DataRowView))
+            if (cboEditBookingArtist.SelectedValue != null && cboEditBookingArtist.SelectedValue.GetType() != typeof(DataRowView))
             {
                 int id = Int32.Parse(cboEditBookingArtist.SelectedValue.ToString());
                 return id;
@@ -180,7 +180,7 @@ namespace Studio76.Forms
         {
             if (string.IsNullOrEmpty(txtBookingLength.Text) == false)
             {
-                if (currentBookingLength == 0)
+                if (Int32.Parse(txtBookingLength.Text) <= 0)
                 {
                     MessageBox.Show("Booking Length must be more than 0", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -195,7 +195,10 @@ namespace Studio76.Forms
                     {
                         using (SqlConnection conn = new SqlConnection(connectionString))
                         {
-                            string sql = @"UPDATE BookingDetails SET SessionLength = '" + currentBookingLength + "', SessionDate = '" + GetSessionDate() + "' WHERE BookingID ='" + currentBooking.BookingID + "';" +
+                            string date = cboBookingDate.Text;
+                            string dt = DateTime.ParseExact(date, "dd/M/yyyy", CultureInfo.InvariantCulture).ToString("yyyy-M-dd");
+
+                            string sql = @"UPDATE BookingDetails SET SessionLength = '" + txtBookingLength.Text + "', SessionDate = '" + GetSessionDate() + "' WHERE BookingID ='" + currentBooking.BookingID + "' AND SessionDate = '" + dt + "';" +
                                 "UPDATE Booking SET ArtistID = '" + cboEditBookingArtist.SelectedValue.ToString() + "', DepositPaid = '" + (cbDepositPaid.Checked ? 1 : 0) + "' WHERE BookingID ='" + currentBooking.BookingID+ "';";
                             SqlCommand cmd = new SqlCommand(sql, conn);
                             conn.Open();
@@ -235,11 +238,25 @@ namespace Studio76.Forms
 
         private void TxtBookingLength_TextChanged(object sender, EventArgs e)
         {
+            UpdateBookingLengthText();
+        }
+
+        private void UpdateBookingLengthText()
+        {
             if (string.IsNullOrEmpty(txtBookingLength.Text) == false)
             {
-                currentBookingLength = Int32.Parse(txtBookingLength.Text);
-                UpdatePriceText();
+                if (txtBookingLength.Text.Contains("Hours"))
+                {
+                    string hours = txtBookingLength.Text.Split(' ')[0];
+                    int h = Int32.Parse(hours);
+                    int time = (h * 2);
+
+                    currentBookingLength = time;
+                    UpdatePriceText();
+                }
+
             }
+
         }
 
         private void Label23_Click(object sender, EventArgs e)
@@ -250,6 +267,26 @@ namespace Studio76.Forms
         private void LblTotalCost_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void cboBookingDate_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateBookingInformation();
+        }
+
+        private void UpdateBookingInformation()
+        {
+            int index = cboBookingDate.SelectedIndex;
+
+
+            lblHourlyPrice.Text = "£" + GetAristHourlyPrice(GetSelectedArtistID());
+            lblTotalCost.Text = "£" + ((GetAristHourlyPrice(GetSelectedArtistID()) * multiBook[index].Length) / 2).ToString("F2");
+
+
+            txtBookingLength.Text = ((float)(multiBook[index].Length)).ToString();
+
+            dtDate.Value = DateTime.ParseExact(multiBook[index].Date, "d/M/yyyy", CultureInfo.InvariantCulture);
+            lblStartTime.Text = multiBook[index].StartTime.ToString().Substring(0, multiBook[index].StartTime.ToString().Length - 3);
         }
 
         private void UpdateSelectedCustomerDetails(int _id)
@@ -275,6 +312,40 @@ namespace Studio76.Forms
                 lblPhoneNoDetails.Text = dr["TelNo"].ToString();
                 lblEmailDetails.Text = dr["Email"].ToString();
             }
+        }
+
+        private void SetupBookingDateCombo()
+        {
+            GetBookingDetailsByID();
+            foreach (MultiBook item in multiBook)
+            {
+                cboBookingDate.Items.Add(item.Date);
+            }
+
+            cboBookingDate.SelectedIndex = 0;
+        }
+
+        private void GetBookingDetailsByID()
+        {
+            multiBook.Clear();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                SqlCommand getCount = new SqlCommand("SELECT * FROM BookingDetails WHERE BookingID = '" + currentBooking.BookingID +"'", conn);
+                conn.Open();
+
+                SqlDataReader reader = getCount.ExecuteReader();
+                while(reader.Read())
+                {
+                    MultiBook mb = new MultiBook();
+                    mb.StartTime = TimeSpan.Parse(reader[1].ToString());
+                    mb.Length = Int32.Parse(reader[2].ToString());
+                    mb.Date = reader[3].ToString().Split(' ')[0];
+
+                    multiBook.Add(mb);
+                }
+                conn.Close();
+
+            };
         }
     }
 }

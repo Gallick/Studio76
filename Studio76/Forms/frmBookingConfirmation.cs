@@ -40,17 +40,7 @@ namespace Studio76.Forms
 
         private void frmBookingConfirmation_Load(object sender, EventArgs e)
         {
-            lblArtistName.Text = currentBooking.ArtistDetails.ArtistName;
-            lblPricePerHour.Text = "£" + currentBooking.ArtistDetails.Price.ToString("F2");
-
-            int price = 0;
-            foreach (MultiBook item in currentBooking.Multi)
-            {
-                price += item.Length;
-            }
-
-
-            lblTotalCostResult.Text = "£" + ((float)(price * currentBooking.ArtistDetails.Price)/ 2).ToString("F2");
+            
         }
 
         private void CustomerAutoCompleteSetup()
@@ -205,6 +195,7 @@ namespace Studio76.Forms
             Master.ChangeToBookingForm();
         }
 
+
         private void txtCustomerSearch_TextChanged(object sender, EventArgs e)
         {
             if (txtCustomerSearch.Text.Contains(" "))
@@ -258,7 +249,17 @@ namespace Studio76.Forms
             }    
             lblBookingLength.Text = ((float)length / 2).ToString("F1") + " Hour(s)";
 
-            lblArtistName.Text = currentBooking.ArtistDetails.ArtistName;            
+            lblArtistName.Text = currentBooking.ArtistDetails.ArtistName;
+            lblPricePerHour.Text = "£" + currentBooking.ArtistDetails.Price.ToString("F2");
+
+            int price = 0;
+
+            foreach (var item in currentBooking.Multi)
+            {
+                price += item.Length;
+            }
+
+            lblTotalCostResult.Text = "£" + (price * currentBooking.ArtistDetails.Price).ToString("F2").ToString();
         }
 
         /*private void GetPreviousBookings(int _customerID)
